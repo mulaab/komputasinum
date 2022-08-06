@@ -1,0 +1,2278 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic Modeling &#8212; Data Science Materials</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Pendugaa/Estimasi Parameter Populasi" href="Cipomean.html" />
+    <link rel="prev" title="Chi-square menggunakan R" href="chi.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Data Science Materials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Materi tentang data science: webmining, statistik, dan datamining
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Webmining
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="seleksifitur.html">
+   Seleksi Fitur Chi-squre
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chisquare.html">
+   Implementasi Seleksi fitur Chi-Square
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chi.html">
+   Chi-square menggunakan R
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Topic Modeling
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Statistik
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Cipomean.html">
+   Pendugaa/Estimasi Parameter Populasi
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ConfidenceIntervaltwopopulationproportions.html">
+   Interval Kepercayaan untuk selisih antara dua Proporsi
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/mulaab/saindata/blob/main/book/contents/Webmining/topikmodelinng.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/mulaab/saindata"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/mulaab/saindata/issues/new?title=Issue%20on%20page%20%2Fcontents/Webmining/topikmodelinng.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/Webmining/topikmodelinng.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#apa-itu-topic-modeling">
+   Apa itu Topic Modeling?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#flowchart-untuk-topic-modeling">
+   Flowchart untuk  Topic Modeling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#persiapan-data-dan-praproses">
+   Persiapan Data dan Praproses
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kumpulan-dokumen-corpus">
+     Kumpulan dokumen (Corpus)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#praproses-teks-data">
+     Praproses  teks (data)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vektorisasi-teks">
+   Vektorisasi teks
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model-bag-of-words">
+     Model Bag of Words
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#latent-dirichlet-allocation">
+   Latent Dirichlet Allocation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lda-latent-dirichlet-allocation">
+     LDA (Latent Dirichlet  Allocation)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#membangun-model-lda">
+     Membangun model LDA
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ukuran-performansi-model">
+     Ukuran performansi Model
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#interpretasi">
+   Interpretasi
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#matrik-document-by-topic">
+     Matrik Document-by-Topic
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#matrik-topic-by-word">
+     Matrik Topic-by-Word
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#interpretasi-makna-topik">
+     Interpretasi makna  Topik
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#topik-topik-dalam-dokumen-dokumen">
+   Topik topik dalam dokumen-dokumen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#melakukan-pengelopokkan-clustering-dokuemn-menggunakan-fitur-topic-modeling">
+   Melakukan pengelopokkan Clustering dokuemn menggunakan fitur  topic modeling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prediksi-topik">
+   Prediksi Topik
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluasi-topik-modelling">
+   Evaluasi topik modelling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#refensi">
+   Refensi
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Topic Modeling</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#apa-itu-topic-modeling">
+   Apa itu Topic Modeling?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#flowchart-untuk-topic-modeling">
+   Flowchart untuk  Topic Modeling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#persiapan-data-dan-praproses">
+   Persiapan Data dan Praproses
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kumpulan-dokumen-corpus">
+     Kumpulan dokumen (Corpus)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#praproses-teks-data">
+     Praproses  teks (data)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vektorisasi-teks">
+   Vektorisasi teks
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#model-bag-of-words">
+     Model Bag of Words
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#latent-dirichlet-allocation">
+   Latent Dirichlet Allocation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lda-latent-dirichlet-allocation">
+     LDA (Latent Dirichlet  Allocation)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#membangun-model-lda">
+     Membangun model LDA
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ukuran-performansi-model">
+     Ukuran performansi Model
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#interpretasi">
+   Interpretasi
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#matrik-document-by-topic">
+     Matrik Document-by-Topic
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#matrik-topic-by-word">
+     Matrik Topic-by-Word
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#interpretasi-makna-topik">
+     Interpretasi makna  Topik
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#topik-topik-dalam-dokumen-dokumen">
+   Topik topik dalam dokumen-dokumen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#melakukan-pengelopokkan-clustering-dokuemn-menggunakan-fitur-topic-modeling">
+   Melakukan pengelopokkan Clustering dokuemn menggunakan fitur  topic modeling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prediksi-topik">
+   Prediksi Topik
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluasi-topik-modelling">
+   Evaluasi topik modelling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#refensi">
+   Refensi
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-modeling">
+<h1>Topic Modeling<a class="headerlink" href="#topic-modeling" title="Permalink to this headline">#</a></h1>
+<section id="apa-itu-topic-modeling">
+<h2>Apa itu Topic Modeling?<a class="headerlink" href="#apa-itu-topic-modeling" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Topic modeling adalah metode pembelajaran tak terawasi (<strong>unsupervised</strong> learning), dimana tujuannya adalah untuk mengektrak pola semantik diantara sekumpulan data. Struktur dasar semantik ini dikenal dengan topik</p></li>
+<li><p>Tentunya, pertama kali yang dilakukan pada proses topic modeling adalah mengektrak fitur dari kata-kata dalam dokumen-dokumen. Selanjutnya menggunakan struktur matematika dan framework misalkan faktorisasi matrik dan SVD (SIngular Value Decompotition) untuk menentukan kelompok kata kata yang memberikan koherensi semantik yang paling besar.</p></li>
+<li><p>Kelompok kata-kata ini membentuk gagasan topik topik.</p></li>
+<li><p>Sementara itu, framewrok matematika juga akan menentukan distribusi <strong>topik</strong> ini untuk setiap dokumen.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Secara singkat , topik modelling adalah:</p>
+<ul>
+<li><p>Setiap <strong>dokumen</strong> terdiri dari beberapa  <strong>topik</strong> ( distribusi dari beberapa topik)</p></li>
+<li><p>Setiap topik berkaitan dengan sekumpulan  <strong>kata-kata</strong> (distribusi dari beberapa kata-kata).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="flowchart-untuk-topic-modeling">
+<h2>Flowchart untuk  Topic Modeling<a class="headerlink" href="#flowchart-untuk-topic-modeling" title="Permalink to this headline">#</a></h2>
+<p><img alt="" src="contents/Webmining/topicpipeline.jpeg" /></p>
+</section>
+<section id="persiapan-data-dan-praproses">
+<h2>Persiapan Data dan Praproses<a class="headerlink" href="#persiapan-data-dan-praproses" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_colwidth</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<section id="kumpulan-dokumen-corpus">
+<h3>Kumpulan dokumen (Corpus)<a class="headerlink" href="#kumpulan-dokumen-corpus" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Menggunakan 8 dokumen sebagai contoh</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;The sky is blue and beautiful.&#39;</span><span class="p">,</span> <span class="s1">&#39;Love this blue and beautiful sky!&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;The quick brown fox jumps over the lazy dog.&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;A king&#39;s breakfast has sausages, ham, bacon, eggs, toast and beans&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;I love green eggs, ham, sausages and bacon!&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;The brown fox is quick and the blue dog is lazy!&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;The sky is very blue and the sky is very beautiful today&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;The dog is lazy but the brown fox is quick!&#39;</span>
+<span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;weather&#39;</span><span class="p">,</span> <span class="s1">&#39;weather&#39;</span><span class="p">,</span> <span class="s1">&#39;animals&#39;</span><span class="p">,</span> <span class="s1">&#39;food&#39;</span><span class="p">,</span> <span class="s1">&#39;food&#39;</span><span class="p">,</span> <span class="s1">&#39;animals&#39;</span><span class="p">,</span> <span class="s1">&#39;weather&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;animals&#39;</span>
+<span class="p">]</span>
+
+<span class="n">corpus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">corpus_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Document&#39;</span><span class="p">:</span> <span class="n">corpus</span><span class="p">,</span> <span class="s1">&#39;Category&#39;</span><span class="p">:</span> <span class="n">labels</span><span class="p">})</span>
+<span class="n">corpus_df</span> <span class="o">=</span> <span class="n">corpus_df</span><span class="p">[[</span><span class="s1">&#39;Document&#39;</span><span class="p">,</span> <span class="s1">&#39;Category&#39;</span><span class="p">]]</span>
+<span class="n">corpus_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-f76b72bc-088e-4080-afe0-cdd71d9b0fc8">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Document</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>The sky is blue and beautiful.</td>
+      <td>weather</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Love this blue and beautiful sky!</td>
+      <td>weather</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>The quick brown fox jumps over the lazy dog.</td>
+      <td>animals</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>A king's breakfast has sausages, ham, bacon, eggs, toast and beans</td>
+      <td>food</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>I love green eggs, ham, sausages and bacon!</td>
+      <td>food</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>The brown fox is quick and the blue dog is lazy!</td>
+      <td>animals</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>The sky is very blue and the sky is very beautiful today</td>
+      <td>weather</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>The dog is lazy but the brown fox is quick!</td>
+      <td>animals</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-f76b72bc-088e-4080-afe0-cdd71d9b0fc8')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-f76b72bc-088e-4080-afe0-cdd71d9b0fc8 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-f76b72bc-088e-4080-afe0-cdd71d9b0fc8');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+</section>
+<section id="praproses-teks-data">
+<h3>Praproses  teks (data)<a class="headerlink" href="#praproses-teks-data" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Bergantung pada dokumen yang diproses, praproses disesuaikan dengan kebutuhan terhadap kumpulan data tersebut</p></li>
+<li><p>Pada contoh dilakukan beberapa proses:</p>
+<ul>
+<li><p>menghilangkan simbol dan  tanda baca</p></li>
+<li><p>menormalisasi huruf (case folding)</p></li>
+<li><p>menghapus spasi  yang tidak perlu/berlebihan</p></li>
+<li><p>menghilangkan stopword</p></li>
+</ul>
+</li>
+</ul>
+<p>tambahan praproses teks jika diperlukan:</p>
+<ul class="simple">
+<li><p>menghilangkan  tanda hubung</p></li>
+<li><p>Stemming</p></li>
+<li><p>Menghilangkan kata-kata yang tidak ada di wordnet</p></li>
+<li><p>Melakukan pembakuan kata</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
+<span class="n">wpt</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">WordPunctTokenizer</span><span class="p">()</span>
+<span class="n">stop_words</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">corpus</span><span class="o">.</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">normalize_document</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="c1"># lower case and remove special characters\whitespaces</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^a-zA-Z\s]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">I</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="c1"># tokeanize document</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">wpt</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="c1"># filter stopwords out of document</span>
+    <span class="n">filtered_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span>
+    <span class="c1"># re-create document from filtered tokens</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered_tokens</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">doc</span>
+
+
+<span class="n">normalize_corpus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">normalize_document</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package stopwords to /root/nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norm_corpus</span> <span class="o">=</span> <span class="n">normalize_corpus</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">norm_corpus</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;sky blue beautiful&#39;, &#39;love blue beautiful sky&#39;,
+       &#39;quick brown fox jumps lazy dog&#39;,
+       &#39;kings breakfast sausages ham bacon eggs toast beans&#39;,
+       &#39;love green eggs ham sausages bacon&#39;,
+       &#39;brown fox quick blue dog lazy&#39;, &#39;sky blue sky beautiful today&#39;,
+       &#39;dog lazy brown fox quick&#39;], dtype=&#39;&lt;U51&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">norm_corpus</span></code> akan dijadikan sebagai input untuk langkah selanjutnya yaitu vektorisasi text.</p></li>
+</ul>
+</section>
+</section>
+<section id="vektorisasi-teks">
+<h2>Vektorisasi teks<a class="headerlink" href="#vektorisasi-teks" title="Permalink to this headline">#</a></h2>
+<section id="model-bag-of-words">
+<h3>Model Bag of Words<a class="headerlink" href="#model-bag-of-words" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Pada  topic modeling, cara paling sederhana vektorisasi teks adalah membentuka fitur berbasis model Bag-of-Words .</p></li>
+<li><p>Ciri dari model  BOW</p>
+<ul>
+<li><p>membentuk vektorisasi teks kedalam representasi merik menggunakan daftar banyaknya kemunculan kata</p></li>
+<li><p>Urutan kata yang  dalam teks diabaikan.</p></li>
+</ul>
+</li>
+<li><p>Gunakan vektorisasi berbasi  <strong>jumlah</strong> pada  topik modeling karena sebagian besar topik modelling menggunakan pembobotan dalam proses komputasinya</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+<span class="c1"># get bag of words features in sparse format</span>
+<span class="n">cv</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">min_df</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">max_df</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="n">cv_matrix</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">norm_corpus</span><span class="p">)</span>
+<span class="n">cv_matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;8x20 sparse matrix of type &#39;&lt;class &#39;numpy.int64&#39;&gt;&#39;
+	with 42 stored elements in Compressed Sparse Row format&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view dense representation</span>
+<span class="c1"># warning might give a memory error if data is too big</span>
+<span class="n">cv_matrix</span> <span class="o">=</span> <span class="n">cv_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+<span class="n">cv_matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
+       [1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0],
+       [1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0],
+       [0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+       [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1],
+       [0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mendapatkan kata-kata dari corpus</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+<span class="c1"># menampilkan vektor  dokumen-fitur</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">vocab</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-749edd0e-c798-4b8f-ac82-5de1545dc26b">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bacon</th>
+      <th>beans</th>
+      <th>beautiful</th>
+      <th>blue</th>
+      <th>breakfast</th>
+      <th>brown</th>
+      <th>dog</th>
+      <th>eggs</th>
+      <th>fox</th>
+      <th>green</th>
+      <th>ham</th>
+      <th>jumps</th>
+      <th>kings</th>
+      <th>lazy</th>
+      <th>love</th>
+      <th>quick</th>
+      <th>sausages</th>
+      <th>sky</th>
+      <th>toast</th>
+      <th>today</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-749edd0e-c798-4b8f-ac82-5de1545dc26b')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-749edd0e-c798-4b8f-ac82-5de1545dc26b button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-749edd0e-c798-4b8f-ac82-5de1545dc26b');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+</section>
+</section>
+<section id="latent-dirichlet-allocation">
+<h2>Latent Dirichlet Allocation<a class="headerlink" href="#latent-dirichlet-allocation" title="Permalink to this headline">#</a></h2>
+<section id="lda-latent-dirichlet-allocation">
+<h3>LDA (Latent Dirichlet  Allocation)<a class="headerlink" href="#lda-latent-dirichlet-allocation" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Latent Dirichlet [diʀiˈkleː] Allocation mempelajari hubungan antara  <strong>kosa kata</strong>, <strong>topik</strong>, and <strong>dokumen</strong> dengan mengasumsikan suatu dokumen dibuat dengan model probabilitas tertentu.</p></li>
+<li><p>Topik pada LDA adalah berdistribusi multinomial distribution terhadap kosa kata-kosa kata  dari kumpulan dokumen (corpus). (Suatu topik tertentu, dinyatakan dengan kosakata-kosatakat tertentu)</p></li>
+</ul>
+<ul class="simple">
+<li><p>Dengan LDA kita tahu:</p>
+<ul>
+<li><p>Kosa kata apa yang lebih memungkinkan terkait dengan topik tertentu? (Topic by Word Matrix)</p></li>
+<li><p>Topik-topik yang mana yang lebih memungkinkan terkait dengan suatu dokumen tertentu? (Document by Topic Matrix)</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>Untuk menginterpretasikan topik dalam LDA, kita memperhatikan daftar peringkat dkata-kata yang paling mungkin (N teratas) dalam topik itu.</p></li>
+<li><p>Kata-kata umum dalam korpus yang sering muncul pada  bagian atas kata untuk setiap topik, yang terkadang membuat sulit untuk membedakan arti dari topik ini.</p></li>
+<li><p>Saat memperhatikan peringkat kata untuk setiap topik, kita dapat menggunakan dua jenis informasi yang disediakan oleh LDA:</p>
+<ul>
+<li><p>Frekuensi kata-kata pada setiap topik</p></li>
+<li><p>Eksklusivitas kata-kata terhadap topik (yaitu, sejauh mana kata itu muncul dalam topik tertentu dengan mengesampingkan yang lain).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="membangun-model-lda">
+<h3>Membangun model LDA<a class="headerlink" href="#membangun-model-lda" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Mengunakan <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code>, tidak menggunakan<code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code> karena  LDA didasarkan pada jumlah kata dan jumlah dokumen.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+from sklearn.decomposition import LatentDirichletAllocation
+
+lda = LatentDirichletAllocation(n_components=3, max_iter=10000, random_state=0)
+doc_topic_matrix = lda.fit_transform(cv_matrix)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 7.49 s, sys: 6.93 ms, total: 7.5 s
+Wall time: 7.56 s
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tmplot</span> <span class="k">as</span> <span class="nn">tmp</span>
+<span class="kn">import</span> <span class="nn">pickle</span> <span class="k">as</span> <span class="nn">pkl</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">ModuleNotFoundError</span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-9-1acf7595899e&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">tmplot</span> <span class="k">as</span> <span class="nn">tmp</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">pickle</span> <span class="k">as</span> <span class="nn">pkl</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;tmplot&#39;
+
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NOTE</span>: If your import is failing due to a missing package, you can
+<span class="n">manually</span> <span class="n">install</span> <span class="n">dependencies</span> <span class="n">using</span> <span class="n">either</span> <span class="o">!</span>pip or !apt.
+
+<span class="n">To</span> <span class="n">view</span> <span class="n">examples</span> <span class="n">of</span> <span class="n">installing</span> <span class="n">some</span> <span class="n">common</span> <span class="n">dependencies</span><span class="p">,</span> <span class="n">click</span> <span class="n">the</span>
+<span class="s2">&quot;Open Examples&quot;</span> <span class="n">button</span> <span class="n">below</span><span class="o">.</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phi</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">get_phi</span><span class="p">(</span><span class="n">doc_topic_matrix</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ukuran-performansi-model">
+<h3>Ukuran performansi Model<a class="headerlink" href="#ukuran-performansi-model" title="Permalink to this headline">#</a></h3>
+<ul>
+<li><p>Uji model menggunakan  <strong>perplexity</strong> dan <strong>log-likelihood</strong>.</p>
+<ul class="simple">
+<li><p>Semakin tinggi log-likelihood, semakin baik.</p></li>
+<li><p>Semakin rendah perplexity, semakin baik .</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+    \mathcal L (\boldsymbol w)
+    = \log p(\boldsymbol w | \boldsymbol \Phi, \alpha)
+    = \sum_d \log p(\boldsymbol w_d | \boldsymbol \Phi, \alpha).
+    \]</div>
+<div class="math notranslate nohighlight">
+\[
+    \text{perplexity}(\text{test set } w) =
+        \exp \left\{
+        - \frac{\mathcal L( w)}{\text{count of tokens}}
+        \right\}
+    \]</div>
+<p>lihat referensi <a class="reference external" href="http://qpleple.com/perplexity-to-evaluate-topic-models/">http://qpleple.com/perplexity-to-evaluate-topic-models/</a></p>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># log-likelihood</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lda</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">cv_matrix</span><span class="p">))</span>
+<span class="c1"># perplexity</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lda</span><span class="o">.</span><span class="n">perplexity</span><span class="p">(</span><span class="n">cv_matrix</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-138.91263303644246
+25.29296641284209
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="interpretasi">
+<h2>Interpretasi<a class="headerlink" href="#interpretasi" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Untuk menginterpretasikan dengan benar hasil yang diberikan oleh LDA, kita perlu mendapatkan dua matriks penting:</p>
+<ul>
+<li><p>Matrik <strong>Document-by-Topic</strong> : ini adalah matriks yang dikembalikan oleh <code class="docutils literal notranslate"><span class="pre">LatentDirichletAllocation</span></code>  ketika menggunakan model <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> pada data.</p></li>
+<li><p>Matrik <strong>Word-by-Topic</strong>: Kami dapat mengambil matriks ini dari hasil LatentDirichletAllocation.components</p></li>
+</ul>
+</li>
+</ul>
+<section id="matrik-document-by-topic">
+<h3>Matrik Document-by-Topic<a class="headerlink" href="#matrik-document-by-topic" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Pada matrik <strong>Document-by-Topic</strong> , dapat dilihat bagaiman setiap dokumen terkait dengan suatu topik-topik</p></li>
+<li><p>Tentunya, nilainya menyatakan nilai probabilitas dokumen terhadapa topik tertentu</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## doc-topic matrix</span>
+<span class="n">doc_topic_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">doc_topic_matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;T1&#39;</span><span class="p">,</span> <span class="s1">&#39;T2&#39;</span><span class="p">,</span> <span class="s1">&#39;T3&#39;</span><span class="p">])</span>
+<span class="n">doc_topic_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T1</th>
+      <th>T2</th>
+      <th>T3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.832191</td>
+      <td>0.083480</td>
+      <td>0.084329</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.863554</td>
+      <td>0.069100</td>
+      <td>0.067346</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.047794</td>
+      <td>0.047776</td>
+      <td>0.904430</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.037243</td>
+      <td>0.925559</td>
+      <td>0.037198</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.049121</td>
+      <td>0.903076</td>
+      <td>0.047802</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.054902</td>
+      <td>0.047778</td>
+      <td>0.897321</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.888287</td>
+      <td>0.055697</td>
+      <td>0.056016</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.055704</td>
+      <td>0.055689</td>
+      <td>0.888607</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="matrik-topic-by-word">
+<h3>Matrik Topic-by-Word<a class="headerlink" href="#matrik-topic-by-word" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Pada matrik  <strong>Topic-by-Word</strong> , dapat dilihat bagaiman masing masing topik berkaitan degan setiap kata-kata dalam  BOW.</p></li>
+<li><p>Tentunya,  nilainya  menyatakan pentingnya suatu kata terhadap masing masing topik</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topic_word_matrix</span> <span class="o">=</span> <span class="n">lda</span><span class="o">.</span><span class="n">components_</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">topic_word_matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">vocab</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bacon</th>
+      <th>beans</th>
+      <th>beautiful</th>
+      <th>blue</th>
+      <th>breakfast</th>
+      <th>brown</th>
+      <th>dog</th>
+      <th>eggs</th>
+      <th>fox</th>
+      <th>green</th>
+      <th>ham</th>
+      <th>jumps</th>
+      <th>kings</th>
+      <th>lazy</th>
+      <th>love</th>
+      <th>quick</th>
+      <th>sausages</th>
+      <th>sky</th>
+      <th>toast</th>
+      <th>today</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.333699</td>
+      <td>0.333647</td>
+      <td>3.332365</td>
+      <td>3.373774</td>
+      <td>0.333647</td>
+      <td>0.333891</td>
+      <td>0.333891</td>
+      <td>0.333699</td>
+      <td>0.333891</td>
+      <td>0.333793</td>
+      <td>0.333699</td>
+      <td>0.333814</td>
+      <td>0.333647</td>
+      <td>0.333891</td>
+      <td>1.330416</td>
+      <td>0.333891</td>
+      <td>0.333699</td>
+      <td>4.332439</td>
+      <td>0.333647</td>
+      <td>1.332558</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.332696</td>
+      <td>1.332774</td>
+      <td>0.333853</td>
+      <td>0.334283</td>
+      <td>1.332774</td>
+      <td>0.333761</td>
+      <td>0.333761</td>
+      <td>2.332696</td>
+      <td>0.333761</td>
+      <td>1.332543</td>
+      <td>2.332696</td>
+      <td>0.333767</td>
+      <td>1.332774</td>
+      <td>0.333761</td>
+      <td>1.335461</td>
+      <td>0.333761</td>
+      <td>2.332696</td>
+      <td>0.333812</td>
+      <td>1.332774</td>
+      <td>0.333744</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.333606</td>
+      <td>0.333579</td>
+      <td>0.333782</td>
+      <td>1.291942</td>
+      <td>0.333579</td>
+      <td>3.332347</td>
+      <td>3.332347</td>
+      <td>0.333606</td>
+      <td>3.332347</td>
+      <td>0.333664</td>
+      <td>0.333606</td>
+      <td>1.332419</td>
+      <td>0.333579</td>
+      <td>3.332347</td>
+      <td>0.334123</td>
+      <td>3.332347</td>
+      <td>0.333606</td>
+      <td>0.333749</td>
+      <td>0.333579</td>
+      <td>0.333698</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>Kita lakukan transport matrik dari data diatas untuk mempermudah analisanya</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">topic_word_matrix</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">vocab</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>bacon</th>
+      <td>0.333699</td>
+      <td>2.332696</td>
+      <td>0.333606</td>
+    </tr>
+    <tr>
+      <th>beans</th>
+      <td>0.333647</td>
+      <td>1.332774</td>
+      <td>0.333579</td>
+    </tr>
+    <tr>
+      <th>beautiful</th>
+      <td>3.332365</td>
+      <td>0.333853</td>
+      <td>0.333782</td>
+    </tr>
+    <tr>
+      <th>blue</th>
+      <td>3.373774</td>
+      <td>0.334283</td>
+      <td>1.291942</td>
+    </tr>
+    <tr>
+      <th>breakfast</th>
+      <td>0.333647</td>
+      <td>1.332774</td>
+      <td>0.333579</td>
+    </tr>
+    <tr>
+      <th>brown</th>
+      <td>0.333891</td>
+      <td>0.333761</td>
+      <td>3.332347</td>
+    </tr>
+    <tr>
+      <th>dog</th>
+      <td>0.333891</td>
+      <td>0.333761</td>
+      <td>3.332347</td>
+    </tr>
+    <tr>
+      <th>eggs</th>
+      <td>0.333699</td>
+      <td>2.332696</td>
+      <td>0.333606</td>
+    </tr>
+    <tr>
+      <th>fox</th>
+      <td>0.333891</td>
+      <td>0.333761</td>
+      <td>3.332347</td>
+    </tr>
+    <tr>
+      <th>green</th>
+      <td>0.333793</td>
+      <td>1.332543</td>
+      <td>0.333664</td>
+    </tr>
+    <tr>
+      <th>ham</th>
+      <td>0.333699</td>
+      <td>2.332696</td>
+      <td>0.333606</td>
+    </tr>
+    <tr>
+      <th>jumps</th>
+      <td>0.333814</td>
+      <td>0.333767</td>
+      <td>1.332419</td>
+    </tr>
+    <tr>
+      <th>kings</th>
+      <td>0.333647</td>
+      <td>1.332774</td>
+      <td>0.333579</td>
+    </tr>
+    <tr>
+      <th>lazy</th>
+      <td>0.333891</td>
+      <td>0.333761</td>
+      <td>3.332347</td>
+    </tr>
+    <tr>
+      <th>love</th>
+      <td>1.330416</td>
+      <td>1.335461</td>
+      <td>0.334123</td>
+    </tr>
+    <tr>
+      <th>quick</th>
+      <td>0.333891</td>
+      <td>0.333761</td>
+      <td>3.332347</td>
+    </tr>
+    <tr>
+      <th>sausages</th>
+      <td>0.333699</td>
+      <td>2.332696</td>
+      <td>0.333606</td>
+    </tr>
+    <tr>
+      <th>sky</th>
+      <td>4.332439</td>
+      <td>0.333812</td>
+      <td>0.333749</td>
+    </tr>
+    <tr>
+      <th>toast</th>
+      <td>0.333647</td>
+      <td>1.332774</td>
+      <td>0.333579</td>
+    </tr>
+    <tr>
+      <th>today</th>
+      <td>1.332558</td>
+      <td>0.333744</td>
+      <td>0.333698</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="interpretasi-makna-topik">
+<h3>Interpretasi makna  Topik<a class="headerlink" href="#interpretasi-makna-topik" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Ini adalah langkah mendasar dalam topic modeling.LDA tidak memberikan label untuk setiap topik</p></li>
+<li><p>Seorang Analislah yang menentukan makna topik..</p></li>
+<li><p>Keputusan ini didasarkan pada kata-kata pada masing masing topik yang memperlihatkan bobot penting yang paling tinggi</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## This function sorts the words importances under each topic</span>
+<span class="c1">## and the selectional criteria include (a) ranks based on weights, or (b) cutoff on weights</span>
+<span class="k">def</span> <span class="nf">get_topics_meanings</span><span class="p">(</span><span class="n">tw_m</span><span class="p">,</span>
+                        <span class="n">vocab</span><span class="p">,</span>
+                        <span class="n">display_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">topn</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                        <span class="n">weight_cutoff</span><span class="o">=</span><span class="mf">0.6</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">topic_weights</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tw_m</span><span class="p">):</span>  <span class="c1">## for each topic row</span>
+        <span class="n">topic</span> <span class="o">=</span> <span class="p">[(</span><span class="n">token</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+                 <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">topic_weights</span><span class="p">)</span>
+                 <span class="p">]</span>  <span class="c1">## zip (word, importance_weight)</span>
+        <span class="n">topic</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span>
+                       <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1">## rank words according to weights</span>
+        <span class="k">if</span> <span class="n">display_weights</span><span class="p">:</span>
+            <span class="n">topic</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">topic</span> <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">weight_cutoff</span>
+                     <span class="p">]</span>  <span class="c1">## output words whose weights &gt; 0.6</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Topic #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> :</span><span class="se">\n</span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">topic_topn</span> <span class="o">=</span> <span class="n">topic</span><span class="p">[:</span><span class="n">topn</span><span class="p">]</span>
+            <span class="n">topic_topn</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">topic_topn</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Topic #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> :</span><span class="se">\n</span><span class="si">{</span><span class="n">topic_topn</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Untuk menggunakan fungsi diatas :</p>
+<ul>
+<li><p>Jika kita ingin menampilkan bobot  kata-kata, maka kita perlu menetapkan  <code class="docutils literal notranslate"><span class="pre">weight_cutoff</span></code>.</p></li>
+<li><p>JIka akan menampilkan hanya N kata teratas, maka kita tetapkan dengan  <code class="docutils literal notranslate"><span class="pre">topn</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_topics_meanings</span><span class="p">(</span><span class="n">topic_word_matrix</span><span class="p">,</span>
+                    <span class="n">vocab</span><span class="p">,</span>
+                    <span class="n">display_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">weight_cutoff</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic #0 :
+[(&#39;sky&#39;, 4.33), (&#39;blue&#39;, 3.37), (&#39;beautiful&#39;, 3.33)]
+====================
+Topic #1 :
+[(&#39;bacon&#39;, 2.33), (&#39;eggs&#39;, 2.33), (&#39;ham&#39;, 2.33), (&#39;sausages&#39;, 2.33)]
+====================
+Topic #2 :
+[(&#39;brown&#39;, 3.33), (&#39;dog&#39;, 3.33), (&#39;fox&#39;, 3.33), (&#39;lazy&#39;, 3.33), (&#39;quick&#39;, 3.33)]
+====================
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_topics_meanings</span><span class="p">(</span><span class="n">topic_word_matrix</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">display_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">topn</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic #0 :
+sky blue beautiful
+====================
+Topic #1 :
+bacon eggs ham
+====================
+Topic #2 :
+brown dog fox
+====================
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="topik-topik-dalam-dokumen-dokumen">
+<h2>Topik topik dalam dokumen-dokumen<a class="headerlink" href="#topik-topik-dalam-dokumen-dokumen" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Setelah kita, menentukan makna topik, kita dapat menganalisa bagaimana masing masing dokumen terkait dengan topik topik</p></li>
+<li><p>Perhatikan matrik <strong>Document-by-Topic</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">,</span> <span class="s1">&#39;food&#39;</span><span class="p">,</span> <span class="s1">&#39;animal&#39;</span><span class="p">]</span>
+<span class="n">doc_topic_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">topics</span>
+<span class="n">doc_topic_df</span><span class="p">[</span><span class="s1">&#39;corpus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm_corpus</span>
+<span class="n">doc_topic_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>weather</th>
+      <th>food</th>
+      <th>animal</th>
+      <th>corpus</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.832191</td>
+      <td>0.083480</td>
+      <td>0.084329</td>
+      <td>sky blue beautiful</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.863554</td>
+      <td>0.069100</td>
+      <td>0.067346</td>
+      <td>love blue beautiful sky</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.047794</td>
+      <td>0.047776</td>
+      <td>0.904430</td>
+      <td>quick brown fox jumps lazy dog</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.037243</td>
+      <td>0.925559</td>
+      <td>0.037198</td>
+      <td>kings breakfast sausages ham bacon eggs toast beans</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.049121</td>
+      <td>0.903076</td>
+      <td>0.047802</td>
+      <td>love green eggs ham sausages bacon</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.054902</td>
+      <td>0.047778</td>
+      <td>0.897321</td>
+      <td>brown fox quick blue dog lazy</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.888287</td>
+      <td>0.055697</td>
+      <td>0.056016</td>
+      <td>sky blue sky beautiful today</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.055704</td>
+      <td>0.055689</td>
+      <td>0.888607</td>
+      <td>dog lazy brown fox quick</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>Kita dapat memvisualisasikan distribusi topik untuk setiap dokumen</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_axis</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DOC&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">norm_corpus</span><span class="p">))]</span>
+<span class="n">y_axis</span> <span class="o">=</span> <span class="n">doc_topic_df</span><span class="p">[[</span><span class="s1">&#39;weather&#39;</span><span class="p">,</span> <span class="s1">&#39;food&#39;</span><span class="p">,</span> <span class="s1">&#39;animal&#39;</span><span class="p">]]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Plot a stackplot - https://matplotlib.org/3.1.1/gallery/lines_bars_and_markers/stackplot_demo.html</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">stackplot</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">y_axis</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">baseline</span><span class="o">=</span><span class="s1">&#39;wiggle&#39;</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">y_axis</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="c1"># Move the legend off of the chart</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">1.04</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x149848b0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/topikmodelinng_58_1.png" src="../../_images/topikmodelinng_58_1.png" />
+</div>
+</div>
+</section>
+<section id="melakukan-pengelopokkan-clustering-dokuemn-menggunakan-fitur-topic-modeling">
+<h2>Melakukan pengelopokkan Clustering dokuemn menggunakan fitur  topic modeling<a class="headerlink" href="#melakukan-pengelopokkan-clustering-dokuemn-menggunakan-fitur-topic-modeling" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+
+<span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">km</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">doc_topic_matrix</span><span class="p">)</span>
+<span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">km</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cluster_labels</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ClusterLabel&#39;</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">corpus_df</span><span class="p">,</span> <span class="n">cluster_labels</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Document</th>
+      <th>Category</th>
+      <th>ClusterLabel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>The sky is blue and beautiful.</td>
+      <td>weather</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Love this blue and beautiful sky!</td>
+      <td>weather</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>The quick brown fox jumps over the lazy dog.</td>
+      <td>animals</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>A king's breakfast has sausages, ham, bacon, eggs, toast and beans</td>
+      <td>food</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>I love green eggs, ham, sausages and bacon!</td>
+      <td>food</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>The brown fox is quick and the blue dog is lazy!</td>
+      <td>animals</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>The sky is very blue and the sky is very beautiful today</td>
+      <td>weather</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>The dog is lazy but the brown fox is quick!</td>
+      <td>animals</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="prediksi-topik">
+<h2>Prediksi Topik<a class="headerlink" href="#prediksi-topik" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Model yang sudah dibuat dapat digunakan untuk memprediksi topik pada dokumen baru</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_texts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;The sky is so blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Love burger with ham&#39;</span><span class="p">]</span>
+
+<span class="n">new_texts_norm</span> <span class="o">=</span> <span class="n">normalize_corpus</span><span class="p">(</span><span class="n">new_texts</span><span class="p">)</span>
+<span class="n">new_texts_cv</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">new_texts_norm</span><span class="p">)</span>
+<span class="n">new_texts_cv</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2, 20)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_texts_doc_topic_matrix</span> <span class="o">=</span> <span class="n">lda</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">new_texts_cv</span><span class="p">)</span>
+<span class="n">topics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">,</span> <span class="s1">&#39;food&#39;</span><span class="p">,</span> <span class="s1">&#39;animal&#39;</span><span class="p">]</span>
+<span class="n">new_texts_doc_topic_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">new_texts_doc_topic_matrix</span><span class="p">,</span>
+                                      <span class="n">columns</span><span class="o">=</span><span class="n">topics</span><span class="p">)</span>
+<span class="n">new_texts_doc_topic_df</span><span class="p">[</span><span class="s1">&#39;predicted_topic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">new_texts_doc_topic_df</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">new_texts_doc_topic_df</span><span class="p">[</span><span class="s1">&#39;corpus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_texts_norm</span>
+<span class="n">new_texts_doc_topic_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>weather</th>
+      <th>food</th>
+      <th>animal</th>
+      <th>predicted_topic</th>
+      <th>corpus</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.775601</td>
+      <td>0.111301</td>
+      <td>0.113098</td>
+      <td>weather</td>
+      <td>sky blue</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.123415</td>
+      <td>0.764965</td>
+      <td>0.111620</td>
+      <td>food</td>
+      <td>love burger ham</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="evaluasi-topik-modelling">
+<h2>Evaluasi topik modelling<a class="headerlink" href="#evaluasi-topik-modelling" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>The following codes demonstrate how to find the optimal topic number based on the coherence scores of the topic models.</p></li>
+</ul>
+</section>
+<section id="refensi">
+<h2>Refensi<a class="headerlink" href="#refensi" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Sarkar (2019), Chapter 6: Text Summarization and Topic Models</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/Webmining"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="chi.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Chi-square menggunakan R</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Cipomean.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Pendugaa/Estimasi Parameter Populasi</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Mulaab-UTM<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

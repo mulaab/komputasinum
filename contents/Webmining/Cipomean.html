@@ -1,0 +1,787 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Pendugaa/Estimasi Parameter Populasi &#8212; Data Science Materials</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Interval Kepercayaan untuk selisih antara dua Proporsi" href="ConfidenceIntervaltwopopulationproportions.html" />
+    <link rel="prev" title="Topic Modeling" href="topikmodelinng.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Data Science Materials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Materi tentang data science: webmining, statistik, dan datamining
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Webmining
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="seleksifitur.html">
+   Seleksi Fitur Chi-squre
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chisquare.html">
+   Implementasi Seleksi fitur Chi-Square
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chi.html">
+   Chi-square menggunakan R
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="topikmodelinng.html">
+   Topic Modeling
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Statistik
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Pendugaa/Estimasi Parameter Populasi
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ConfidenceIntervaltwopopulationproportions.html">
+   Interval Kepercayaan untuk selisih antara dua Proporsi
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/mulaab/saindata/blob/main/book/contents/Webmining/Cipomean.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/mulaab/saindata"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/mulaab/saindata/issues/new?title=Issue%20on%20page%20%2Fcontents/Webmining/Cipomean.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/Webmining/Cipomean.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Pendugaa/Estimasi Parameter Populasi
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#topik-yang-dibahas">
+     Topik yang dibahas :
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tujuan-pembelajaran">
+     Tujuan Pembelajaran:
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selang-kepercayaan-confidence-interval">
+   Selang Kepercayaan ( Confidence Interval)
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#arti-interval-kepercayaan">
+     Arti interval kepercayaan
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#interval-kepercayaan-untuk-rata-rata-populasi">
+     Interval Kepercayaan untuk rata-rata Populasi
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#estimasi-titik-untuk-rata-rata-populasi-dan-variansi">
+     Estimasi titik untuk rata-rata populasi dan variansi
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sifat-sifat-estimator-titik">
+     Sifat-sifat Estimator titik
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#https-yuvalianda-com-distribusi-t-text-distribusi-t-adalah-kelompok-distribusi-standar-distribusi-z">
+   https://yuvalianda.com/distribusi-t/#:~:text=Distribusi-t adalah kelompok distribusi,standar (distribusi-Z).
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Pendugaa/Estimasi Parameter Populasi</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Pendugaa/Estimasi Parameter Populasi
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#topik-yang-dibahas">
+     Topik yang dibahas :
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tujuan-pembelajaran">
+     Tujuan Pembelajaran:
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selang-kepercayaan-confidence-interval">
+   Selang Kepercayaan ( Confidence Interval)
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#arti-interval-kepercayaan">
+     Arti interval kepercayaan
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#interval-kepercayaan-untuk-rata-rata-populasi">
+     Interval Kepercayaan untuk rata-rata Populasi
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#estimasi-titik-untuk-rata-rata-populasi-dan-variansi">
+     Estimasi titik untuk rata-rata populasi dan variansi
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sifat-sifat-estimator-titik">
+     Sifat-sifat Estimator titik
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#https-yuvalianda-com-distribusi-t-text-distribusi-t-adalah-kelompok-distribusi-standar-distribusi-z">
+   https://yuvalianda.com/distribusi-t/#:~:text=Distribusi-t adalah kelompok distribusi,standar (distribusi-Z).
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="pendugaa-estimasi-parameter-populasi">
+<h1>Pendugaa/Estimasi Parameter Populasi<a class="headerlink" href="#pendugaa-estimasi-parameter-populasi" title="Permalink to this headline">#</a></h1>
+<p>Fokus dari adalah pengembangan metode untuk menentukan estimasi titik dan interval dari parameter populasi</p>
+<section id="topik-yang-dibahas">
+<h2>Topik yang dibahas :<a class="headerlink" href="#topik-yang-dibahas" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Penduga interval untuk selisih rata-rata dua populasi normal</p></li>
+<li><p>Penduga interval untuk varians dari populasi normal</p></li>
+<li><p>Penduga interval untuk rasio varians dua populasi normal</p></li>
+<li><p>Metode Estimasi: metode momen dan metode kemungkinan maksimum</p></li>
+<li><p>Penaksir titik dan interval untuk parameter binomial</p></li>
+<li><p>Prediksi: melakukan estimasi pengamatan masa yang akan datang</p></li>
+</ul>
+</section>
+<section id="tujuan-pembelajaran">
+<h2>Tujuan Pembelajaran:<a class="headerlink" href="#tujuan-pembelajaran" title="Permalink to this headline">#</a></h2>
+<p>Setelah mempelajari bab ini pembaca dapat memahami</p>
+<ul class="simple">
+<li><p>Memahami peran estimasi dalam statistik terapan</p></li>
+<li><p>Menentukan estimasi titik dan interval untuk berbagai parameter distribusi diskrit dan kontinu</p></li>
+<li><p>Memahami konsep koefisien kepercayaan dan menafsirkan interval kepercayaan.</p></li>
+<li><p>Memahami perbedaan antara signifikansi statistik dan praktis</p></li>
+<li><p>Menerapakan bahasa python untuk menentukan interval kepercayaan dari
+parameter dari berbagai distribusi.</p></li>
+</ul>
+<p>Catatan: silahkan download slide kulish di <a class="reference external" href="https://github.com/mulaab/saindata/tree/main/_sources/contents/Webmining/Estimasi_Paramter_fix.ppt">ppt</a></p>
+<p>Kita sering menghadapi masalah statistik dari seperti berikut: kita memiliki banyak atau besar objek populasi sehingga jika pengukuran dilakukan pada setiap objek maka tentunya kita akan memiliki distribusi dari pengukuran dari semua objek dalam populasi tersebut.  Karena kita tidak memungkinkan untuk melakukan pengukuran pada semua objek dalam populasi, distribusi ini tentu saja tidak diketahui. Hal terbaik yang dapat kita lakukan dalam praktiknya adalah memperkirakan berbagai karakteristik (atau biasa disebut sebagai parameter) dari informasi distribusi  terkandung dalam pengukuran yang dilakukan dalam sampel acak objek  populasi. Misalnya, jika kita ingin mengestimasi mean dan varians dari distribusi populasi,  kita dapat menggunakan rata-rata sampel dan varians sampel sebagai penduga untuk besaran-besaran tersebut. Jika kita ingin menaksir median populasi, kita dapat menggunakan median sampel. Tentu saja, parameter lain dari distribusi populasi seperti, standar deviasi, atau proporsi populasi dapat diperkirakan atau ditaksir dari pengukuran sample acak obyek yang telah dilakukan.  Hal inilah Masalah ini
+jenis adalah fokus dari bab ini.</p>
+<p>KIta membahas dua macam penduga untuk paramater populasi, yaitu penduga titik dan penduga interval. Lebih tepatnya, misalkan  <span class="math notranslate nohighlight">\((X_1,X_2, X_3 \ldots)\)</span>  adalah sample acak dari populasi yang memiliki parameter yang diharapkan, misalnya  <span class="math notranslate nohighlight">\(\theta\)</span> . Jika <span class="math notranslate nohighlight">\(\hat \theta=\varphi(X_1,X_2,X_3 \ldots, X_n)\)</span> adalah fungsi benilai tunggal (single-values) dari <span class="math notranslate nohighlight">\(X_1,X_2,X_3, \ldots,X_n\)</span> sehingga <span class="math notranslate nohighlight">\(\hat \theta\)</span>  itu sendiri adalah variabel acak, maka kita menyebut <span class="math notranslate nohighlight">\(\theta\)</span> sebagai statistik. Selanjutnya, jika</p>
+<div class="math notranslate nohighlight">
+\[
+E\left(\varphi\left(X_{1}, \ldots, X_{n}\right)\right)=E(\hat{\theta})=\theta
+\]</div>
+<p>kita sebut  <span class="math notranslate nohighlight">\(\hat \theta \)</span> adalah unbiasaed estimator dari <span class="math notranslate nohighlight">\(\theta\)</span>. Statistik <span class="math notranslate nohighlight">\(\hat \theta \)</span>  biasnya disebut dengan estimator titik ( point estimator) untuk parameter <span class="math notranslate nohighlight">\(\theta\)</span>. Jika <span class="math notranslate nohighlight">\(\hat \theta_l= \varphi_l(X_1,X_2, \ldots,X_n)\)</span> dan <span class="math notranslate nohighlight">\(\hat \theta_u= \varphi_u(X_1,X_2, \ldots,X_n)\)</span> adalah dua statistik sehingga</p>
+<div class="math notranslate nohighlight">
+\[
+P\left(\hat{\theta}_{l}&lt;\theta&lt;\hat{\theta}_{u}\right)=1-\alpha \label{eq1}
+\tag{8.1.2}
+\]</div>
+<p>kita katakan bahwa interval acak <span class="math notranslate nohighlight">\((\hat \theta_l,\hat \theta_u)\)</span> adalah <span class="math notranslate nohighlight">\(100(1-\alpha)\%\)</span> interval kepercayaan untuk parameter <span class="math notranslate nohighlight">\(\theta\)</span> . Pasangan statistik <span class="math notranslate nohighlight">\((\hat \theta_l,\hat \theta_u)\)</span> kadangkala disebut sebagai penduga interval (estimator interval) untuk <span class="math notranslate nohighlight">\(\theta\)</span>. Titik ujung  (<span class="math notranslate nohighlight">\(\hat \theta_l  \)</span> dan <span class="math notranslate nohighlight">\( \hat \theta_u\)</span>) dari interval kepercayaan <span class="math notranslate nohighlight">\((\hat \theta_l,\hat \theta_u)\)</span> kadangkala disebut batas kepercayaan  <span class="math notranslate nohighlight">\(100(1-\alpha)\%\)</span> dari <span class="math notranslate nohighlight">\(\theta\)</span>  dan <span class="math notranslate nohighlight">\(\hat \theta_l  \)</span> , <span class="math notranslate nohighlight">\( \hat \theta_u\)</span> masing masing disebut sebagai batas bawah kepercayaan dan batas atas kepercayaan. Probabilitas <span class="math notranslate nohighlight">\(1-\alpha\)</span>  dalam persamaan (8.1.2)  disebut  koefisien kepercayaan ( confidence coefficient) , sedangkan <span class="math notranslate nohighlight">\( 100(1-\alpha)\%\)</span> disebut tingkat kepercayaan (confidence level). Juga selisih <span class="math notranslate nohighlight">\(\hat \theta_l -\hat \theta_u\)</span> disebut lebar interval kepercayaan.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="selang-kepercayaan-confidence-interval">
+<h1>Selang Kepercayaan ( Confidence Interval)<a class="headerlink" href="#selang-kepercayaan-confidence-interval" title="Permalink to this headline">#</a></h1>
+<p>Pada bagian ini akan membahas apa artinya selang kepercayaan(confidence interval). Maka kita akan melihat bagaimana kita akan mendefinisikan confident interval pada rata-rata populasi.
+Setelah itu, kita akan memahami arti dari selang kepercayaan untuk selisih antara dua  rata-rata dan dan diantara dua proporsi. Terakhir, kita akan membahas hubungan  antara  distribusi t dan selang kepercayaan.</p>
+<section id="arti-interval-kepercayaan">
+<h2>Arti interval kepercayaan<a class="headerlink" href="#arti-interval-kepercayaan" title="Permalink to this headline">#</a></h2>
+<p>Kita dapat mendefinisikan interval kepercayaan (CI) sebagai seberapa besar kita tidak yakin tentang hasil uji statistik pada sampel jika diterapkan pada seluruh populasi. Definisi lain yang lebih sederhana dari interval kepercayaan sebagai kisaran nilai yang kita yakini.</p>
+<p>Misalnya, kita dapat memilih secara acak 40 pria dan mengukur tinggi badan mereka. Kita tahu tinggi rata-ratanya adalah 175 cm, dan diperoleh standar deviasinya  20 cm. Jika kita memutuskan untuk menggunakan interval kepercayaan 95 persen, kita akan mendapatkan hasilnya yaitu 175 ± 6,2 cm, yang berarti bahwa
+95 persen, kita akan menemukan orang-orang yang tingginya berada di antara
+168,8 cm dan 181,2 cm. Kita akan melihat di bagian selanjutnya bagaimana kita
+menghitung angka ini.</p>
+</section>
+<section id="interval-kepercayaan-untuk-rata-rata-populasi">
+<h2>Interval Kepercayaan untuk rata-rata Populasi<a class="headerlink" href="#interval-kepercayaan-untuk-rata-rata-populasi" title="Permalink to this headline">#</a></h2>
+<p>Mengikuti contoh diatas, sekarang kita akan menghitung
+interval kepercayaan untuk rata-rata populasi  dengan
+angkah-langkah berikut:</p>
+<ol class="simple">
+<li><p>Pilih interval kepercayaan yang dinginkan. Dalam kasus kami, itu adalah 95 persen.</p></li>
+<li><p>Temukan nilai-z pada  tabel z. Pada kasus ini  adalah 1,96.</p></li>
+<li><p>Hitung rentang menggunakan <span class="math notranslate nohighlight">\(\bar{X} \pm Z \frac{s}{\sqrt{n}}\)</span>  dimana <span class="math notranslate nohighlight">\( \bar X \)</span> adalah rata-rata,  <span class="math notranslate nohighlight">\(z\)</span> adalah nilai <span class="math notranslate nohighlight">\(z\)</span> yang dipilih , <span class="math notranslate nohighlight">\(s\)</span> adalah standar deviasi, dan <span class="math notranslate nohighlight">\(n\)</span> adalah banyaknya pengamatan.  Sehingga kita mendapatkan <span class="math notranslate nohighlight">\(175 \pm 1.96 \frac{20}{\sqrt{40}}\)</span> atau <span class="math notranslate nohighlight">\(175 \pm 6.2\)</span></p></li>
+</ol>
+<p>Sekarang, marilah kita lihat bagaimaan untuk mensimulasikan yang lebih komplek menggunakan Python.</p>
+<p>Referensi : Ebook-Statistics for Beginners in Data Science</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Kita membuat  100 ribu data dengan  rata-rata 4
+dan standar deviasi 2.82</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shape</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span> 
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="mi">100000</span><span class="p">)</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">shape</span><span class="o">*</span><span class="n">scale</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">scale</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.0
+2.8284271247461903
+</pre></div>
+</div>
+</div>
+</div>
+<p>Setelah itu, kita hitung rata-rata sample dengan ukuran sample 500</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_mean</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5000</span><span class="p">):</span>
+    <span class="n">random_sample</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">sample_size</span><span class="p">)</span>
+    <span class="n">sample_mean</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">random_sample</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">random_sample</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Kemudian kita ploting data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sample_mean</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Cipomean_8_0.png" src="../../_images/Cipomean_8_0.png" />
+</div>
+</div>
+<p>Akhirnya kita mendapatkan interval kepercayaan pada grafik berikut</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sample_mean</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">mu</span><span class="p">,</span><span class="n">mu</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">],</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">mu</span><span class="o">-</span><span class="p">(</span><span class="mf">1.96</span><span class="o">*</span><span class="n">sigma</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sample_size</span><span class="p">)),</span><span class="n">mu</span><span class="o">-</span><span class="p">(</span><span class="mf">1.96</span><span class="o">*</span><span class="n">sigma</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sample_size</span><span class="p">))],[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">],</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">mu</span><span class="o">+</span><span class="p">(</span><span class="mf">1.96</span><span class="o">*</span><span class="n">sigma</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sample_size</span><span class="p">)),</span><span class="n">mu</span><span class="o">+</span><span class="p">(</span><span class="mf">1.96</span><span class="o">*</span><span class="n">sigma</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sample_size</span><span class="p">))],[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">],</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Cipomean_10_0.png" src="../../_images/Cipomean_10_0.png" />
+</div>
+</div>
+<p>Seperti yang kita lihat diatas, interval kepercayaannnya adalah <span class="math notranslate nohighlight">\(4\pm 0.24792\)</span></p>
+</section>
+<section id="estimasi-titik-untuk-rata-rata-populasi-dan-variansi">
+<h2>Estimasi titik untuk rata-rata populasi dan variansi<a class="headerlink" href="#estimasi-titik-untuk-rata-rata-populasi-dan-variansi" title="Permalink to this headline">#</a></h2>
+<p>Pada bagian ini kita bahas estimasi titik yang umum digunakan yaitu estimator untuk mean dan varians dari populasi. Misalkan, suatu populasi
+di mana variabel yang diukura adalah variabel X dengan nilai  variabel acak kontinu dan memiliki fungsi kepadatan probabilitas (p.d.f.) <span class="math notranslate nohighlight">\(f(x)\)</span>. Rata-rata populasi dan variansi dinyatakan sebagai berikut:</p>
+<div class="math notranslate nohighlight">
+\[ 
+\mu = \int _ { - \infty } ^ { \infty } x f ( x ) d x
+\]</div>
+<p>dan
+$<span class="math notranslate nohighlight">\(
+\sigma ^ { 2 } = \int _ { - \infty } ^ { \infty } ( x - \mu ) ^ { 2 } f ( x ) d x
+\)</span>$</p>
+<p>Untuk kasus populasi dimana <span class="math notranslate nohighlight">\(X\)</span> adalah variabel acak diskrit dan memiliki fungsi probabilitas (p.f) <span class="math notranslate nohighlight">\(p(x)\)</span> , kita mendefinisikan sama  <span class="math notranslate nohighlight">\(\mu\)</span> dan <span class="math notranslate nohighlight">\(\sigma^2\)</span> dengan menggunakan operasi dari penjumlahan. Jika populasi distribusi tidak diketahui, maka <span class="math notranslate nohighlight">\(\mu\)</span> dan <span class="math notranslate nohighlight">\(\sigma^2\)</span> maka bagaimana kita menduga <span class="math notranslate nohighlight">\(\mu\)</span> dan <span class="math notranslate nohighlight">\(\sigma^2\)</span> dari variabel acak <span class="math notranslate nohighlight">\((X_1, \ldots,X_n)\)</span> yang diambil dari populasi?. Terdapat banyak cara untuk menduga estimator. Estimator titik sederhana untuk <span class="math notranslate nohighlight">\(\mu\)</span>  dan banyak digunakan adalah rata-rata sample <span class="math notranslate nohighlight">\(\hat X\)</span> . Rata-rata sample <span class="math notranslate nohighlight">\(\hat X\)</span> adalah variabel acak yang memiliki distribusi sendiri, oleh karena itu sample memiliki mean dan variansi</p>
+<div class="math notranslate nohighlight">
+\[
+ E ( \overline { X } ) = \mu 
+ \tag {8.2.3}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\operatorname { Var } ( \overline { X } ) = \sigma ^ { 2 } / n 
+\tag {8.2.4}
+\]</div>
+<p>Itu harus diperhatikan bahwa statistik <span class="math notranslate nohighlight">\(\bar X\)</span> memiliki nilai unik untuk sample tertentu dan dapat dinyatakan sebagai titik pada sumbu <span class="math notranslate nohighlight">\(\mu\)</span>.  Jika kita perhatikan jumlahnya yang tak terbatas dari sample dari populasi ini, masing masing ukuran  n, maka persamaan (8.2.3) pada dasarnya menyatakan bahwa jika kita rata-rata X dari sampel ini, rata-rata tersebut akan sama dengan <span class="math notranslate nohighlight">\(\mu\)</span>.  Selanjutnya, kita perhatikan dari persamaan (8.2.4) yaitu jika kita telah menentkan variansi dari semua ini <span class="math notranslate nohighlight">\(\bar X\)</span>, hasilnya akan menjadi <span class="math notranslate nohighlight">\(\sigma^2/n\)</span>, yang memberikan indikasi  bagaimana semua <span class="math notranslate nohighlight">\(\bar x\)</span>  ini  akan berdistribusi disekitar nilai <span class="math notranslate nohighlight">\(\mu\)</span>.  Catatan bahwa semakin besari nilai <span class="math notranslate nohighlight">\(n\)</span>, lebih mendekati nilai <span class="math notranslate nohighlight">\(\bar X\)</span> dan akan mengelompok disekitar <span class="math notranslate nohighlight">\(\mu\)</span>. Sehingga dalam cara sama, varianasi sample <span class="math notranslate nohighlight">\(S^2\)</span> dimana
+$<span class="math notranslate nohighlight">\(
+S^2= \frac{\sum_{i=1}^n(X_i-\bar X)^2}{n-1}
+\)</span>$</p>
+<p>dapat digunakan sebagai estimator titik untuk variansi populasi <span class="math notranslate nohighlight">\(\sigma^2​\)</span>. Statistik <span class="math notranslate nohighlight">\(S^2​\)</span> adalah variabel acak dengan distribusi tersendiri dan mean dari distribusi ini adalah <span class="math notranslate nohighlight">\(\sigma^2​\)</span>. Yaitu
+$<span class="math notranslate nohighlight">\(
+E(S^2)=\sigma^2
+\tag {8.2.5}
+\)</span>$</p>
+<p><span class="math notranslate nohighlight">\(S^2\)</span> adalah estimator titik tidak bias (unbiased) untuk <span class="math notranslate nohighlight">\(\sigma^2\)</span>.  Kita dapat meringkas hasil diatas dalam teorema berikut:</p>
+<p><strong>Teorema</strong>. Jika <span class="math notranslate nohighlight">\(\bar X\)</span> dan <span class="math notranslate nohighlight">\(S^2\)</span> ditentukan dari variabel acak ukuran <span class="math notranslate nohighlight">\(n\)</span> dari populasi dengan tidak diketahui rata rata (<span class="math notranslate nohighlight">\(\mu\)</span> ) dan tidak diketahui variansi (<span class="math notranslate nohighlight">\(\sigma^2\)</span>), maa <span class="math notranslate nohighlight">\(\bar X\)</span>  adalah estimator titik tidak bias untuk <span class="math notranslate nohighlight">\(\mu\)</span> yang memiliki variansi <span class="math notranslate nohighlight">\(\sigma_\bar X^2=\sigma^2/n\)</span> . Sehingga <span class="math notranslate nohighlight">\(S^2\)</span> adalah estimator titik tidak bias untuk <span class="math notranslate nohighlight">\(\sigma^2\)</span></p>
+</section>
+<section id="sifat-sifat-estimator-titik">
+<h2>Sifat-sifat Estimator titik<a class="headerlink" href="#sifat-sifat-estimator-titik" title="Permalink to this headline">#</a></h2>
+<p>Ada beberapa sifat dari estimator titik yang baik yang sering ditemukan, seperti unbiasedness,minimum variansinya, efisien dan, konsisten. Sifat yang akan dibahas pada bagian ini lebih detail yaitu</p>
+<ul class="simple">
+<li><p>unbiasedness</p></li>
+<li><p>Minimum variansi</p></li>
+</ul>
+<p>Misalkan <span class="math notranslate nohighlight">\(f(x,\theta)\)</span> adalah p.d.f dari suatu populasi dengan parameter <span class="math notranslate nohighlight">\(\theta \)</span> yang tidak diketahui dan <span class="math notranslate nohighlight">\(X_1, \ldots,X_n\)</span>  adalah variabel acak dari populasi tesebut. Jika <span class="math notranslate nohighlight">\(\hat \theta =\varphi(X_1,\ldots,X_n)\)</span> adalah titik estimator dari parameter <span class="math notranslate nohighlight">\(\theta\)</span> yang tidak diketahui. Maka kita dapatkan</p>
+<p><strong>Definisi 8.2.1</strong>. Estimasi titik <span class="math notranslate nohighlight">\(\hat \theta =\varphi(X_1,\ldots,X_n)\)</span> dikatakan menjadi estimator tidak bias dari <span class="math notranslate nohighlight">\(\theta\)</span> jika dan hanya jika <span class="math notranslate nohighlight">\(E(\hat \theta)=\theta\)</span>. Jika <span class="math notranslate nohighlight">\(E(\hat \theta) \ne \theta\)</span>, maka <span class="math notranslate nohighlight">\(\hat \theta\)</span> adalah bias dan selisihnya <span class="math notranslate nohighlight">\(Bias(\hat \theta)=E(\hat \theta)-\theta\)</span> disebut bias dari <span class="math notranslate nohighlight">\(\hat \theta\)</span></p>
+<p>Dari theorema 8.2.1 kita nyatakan bahwa <span class="math notranslate nohighlight">\(\bar X\)</span>  dan <span class="math notranslate nohighlight">\(S^2\)</span> adalah estimator unbiased dari rata-rata populasi <span class="math notranslate nohighlight">\(\mu\)</span> dan variansi populasi <span class="math notranslate nohighlight">\(\sigma^2\)</span>. Masih ada pertanyaan penting yang harus dijawab. Jika mean <span class="math notranslate nohighlight">\(\mu\)</span> dari populasi tidak diketahui dan jika kita ambil sample acak dari populasi ini dan menghitung rata-rata sample <span class="math notranslate nohighlight">\(\bar X\)</span> menggunakan itu sebagai estimator <span class="math notranslate nohighlight">\(\mu\)</span>, bagaimna kita tahu seberapa dekat estimator <span class="math notranslate nohighlight">\(\bar X\)</span> ke nilai sesungguhnya <span class="math notranslate nohighlight">\(\mu\)</span>?.  Jawaban untu pertanyaan ini bergantung pada ukuran populasi dan ukuran sample. Misalkan <span class="math notranslate nohighlight">\(E\)</span> adalah selisih maximum absolute antar estimator <span class="math notranslate nohighlight">\(\bar X\)</span> dan nilai sesungguhnya <span class="math notranslate nohighlight">\(\mu\)</span> dan <span class="math notranslate nohighlight">\(0&lt;\alpha&lt;1\)</span>. Kemudian, jika populasinya normal tanpa batasan ukuran sampel atau populasi tak terbatas yang tidak normal dan ukuran sampel besar (n 30),  kita menyebutnya probabilitas <span class="math notranslate nohighlight">\((1-\alpha)\)</span>  yaitu
+$<span class="math notranslate nohighlight">\(
+\text {Margin error} : E=z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n}
+\tag{8.2.6}
+\)</span><span class="math notranslate nohighlight">\(
+dengan mengasumsikan \)</span>\sigma<span class="math notranslate nohighlight">\( diketahui.  Besaran \)</span>E<span class="math notranslate nohighlight">\( disebut dengan margin error atau batas error estimasi.  Perhatikan bahwa dalam praktetkna,  umumnya ditetapkan \)</span>\alpha=0.01, 0.05, \text{atau}  \space  0.1<span class="math notranslate nohighlight">\( karena ini memberikan probabilitas yang cukup tinggi \)</span>(1-\alpha ) $ bahwa kesalahan estimasi maksimum adalah
+sama dengan E</p>
+<p>Hasil pada persamaan (8.2.6) masih valid jika populasi adalah infinite dan sampling dilakukan dengan pengembalian atau jka sampling dilakukan tanpa pengembalian, tetapi ukuran sample kurang dari <span class="math notranslate nohighlight">\(5\%\)</span> dari ukuran populasi <span class="math notranslate nohighlight">\((n&lt;0.005N)\)</span>. Jika populasi adalah finite dan ukuran sample relatif lebiha besari dari <span class="math notranslate nohighlight">\(5\%\)</span>, maka menggunakan faktor ektra yang dikenal dengan finite population correction <span class="math notranslate nohighlight">\(\sqrt{(N-n)/(N-1))}\)</span> dan selisih absolute maximum antara estimator <span class="math notranslate nohighlight">\(\bar X\)</span> dan nilai sesungguhnya <span class="math notranslate nohighlight">\(\mu\)</span> adalah
+$<span class="math notranslate nohighlight">\(
+\text{Margin error}:E  z _ { \frac { \alpha } { 2 } } \frac { \sigma } { \sqrt { n } } \sqrt { \frac { N - n } { N - 1 } }
+\tag{8.2.7}
+\)</span>$</p>
+<p>dimana <span class="math notranslate nohighlight">\(N\)</span> dan <span class="math notranslate nohighlight">\(n\)</span> adalah masing-masing adalah ukuran populasi dan ukuran sample. Jika <span class="math notranslate nohighlight">\(\sigma\)</span> tidak diketahu dalam persamaan (8.2.6) dan (8.2.7) kemudan dalam sample besar, hal tersebut dapat diganti dengan standar deviasi sample <span class="math notranslate nohighlight">\(S\)</span></p>
+<p><strong>Contoh 8.2.1</strong> (Margin Error) . Perusahan manufaktur ingin menggunkan mean dari sample acak ukuran <span class="math notranslate nohighlight">\(n=64\)</span> untuk memperkirakan panjang rata-rata batang yang diproduksi.
+Jika diketahui <span class="math notranslate nohighlight">\(\sigma = 0,5 \)</span> cm , tentukan margin of error dengan probabilitas <span class="math notranslate nohighlight">\(95\%\)</span></p>
+<p><strong>Solusi</strong> Karena ukuran sampel besar dan dengan asumsi bahwa jumlah total batang yang diproduksi  cukup besar, maka dari Persamaan (8.2.6)
+$<span class="math notranslate nohighlight">\(
+E=z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n}
+\)</span><span class="math notranslate nohighlight">\(
+disini \)</span>1-\alpha = 0.95<span class="math notranslate nohighlight">\( ,\)</span>\alpha/2=0.025<span class="math notranslate nohighlight">\(, \)</span>\alpha=0.5<span class="math notranslate nohighlight">\(, \)</span>z_{0.025}=1.96<span class="math notranslate nohighlight">\( dan \)</span>n=64<span class="math notranslate nohighlight">\( sehingga diperoleh 
+\)</span><span class="math notranslate nohighlight">\(
+E = 1.96 \times \frac { 0.5 } { \sqrt { 64 } } = 0.1225 \space cm 
+\)</span><span class="math notranslate nohighlight">\(
+perhatikan bahwa nilai nonabsolute E adalah \)</span>0.1225$</p>
+<p>Sifat lain yang diinginkan dari penduga tak bias adalah apakah penaksir varians minimum atau tidak. Jika ya, maka akan menghasilkan perkiraan yang lebih mendekati kebenaran
+nilai parameter</p>
+<p><strong>Definisi 8.2.2.</strong> Perhatika suatu populasi yang memiliki p.d.f <span class="math notranslate nohighlight">\(f(x,\theta) \)</span> dengan parameter <span class="math notranslate nohighlight">\(\theta\)</span> tidak diketahui. Misalkan <span class="math notranslate nohighlight">\(\hat \theta_1,\theta_1,\ldots,\theta_n\)</span> adalah sekumpulan estimator tidak bias dari <span class="math notranslate nohighlight">\(\theta\)</span>. Maka estimator <span class="math notranslate nohighlight">\(\hat \theta_i\)</span> dikatakan sebagai estimator varians minimum tidak bias (UMV) dari <span class="math notranslate nohighlight">\(\theta\)</span> jika variansi dari <span class="math notranslate nohighlight">\(\hat \theta_i\)</span> kurang dari atau sama dengan variansi dari estimator tidak bias lainnya</p>
+<p>Definisi 8.2.3. Mean Square Error (MSE) estimator <span class="math notranslate nohighlight">\(\hat \theta\)</span> dari <span class="math notranslate nohighlight">\(\theta\)</span> didefinisikan dengan</p>
+<div class="math notranslate nohighlight">
+\[
+ \operatorname { MSE } ( \hat { \theta } ) = E ( \hat { \theta } - \theta ) ^ { 2 } 
+\]</div>
+<p>yang dapat ditulis lagi persamaan (8.2.8) dengan</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname { MSE } ( \hat { \theta } ) = E [ \hat { \theta } - E ( \hat { \theta } ) + E ( \hat { \theta } ) - \theta ] ^ { 2 } = \operatorname { Var } ( \hat { \theta } ) + [ \operatorname { Bias } ( \hat { \theta } ) ] ^ { 2 } 
+\]</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="https-yuvalianda-com-distribusi-t-text-distribusi-t-adalah-kelompok-distribusi-standar-distribusi-z">
+<h1><a class="reference external" href="https://yuvalianda.com/distribusi-t/#:~:text=Distribusi%2Dt%20adalah%20kelompok%20distribusi,standar%20(distribusi%2DZ)">https://yuvalianda.com/distribusi-t/#:~:text=Distribusi-t adalah kelompok distribusi,standar (distribusi-Z)</a>.<a class="headerlink" href="#https-yuvalianda-com-distribusi-t-text-distribusi-t-adalah-kelompok-distribusi-standar-distribusi-z" title="Permalink to this headline">#</a></h1>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/Webmining"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="topikmodelinng.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Topic Modeling</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="ConfidenceIntervaltwopopulationproportions.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Interval Kepercayaan untuk selisih antara dua Proporsi</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Mulaab-UTM<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

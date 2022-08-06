@@ -1,0 +1,1671 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Chi-Square Feature Selection &#8212; Data Science Materials</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Data Science Materials</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Materi tentang data science: webmining, statistik, dan datamining
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Webmining
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="seleksifitur.html">
+   Seleksi Fitur Chi-squre
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chisquare.html">
+   Implementasi Seleksi fitur Chi-Square
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chi.html">
+   Chi-square menggunakan R
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="topikmodelinng.html">
+   Topic Modeling
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Statistik
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Cipomean.html">
+   Pendugaa/Estimasi Parameter Populasi
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ConfidenceIntervaltwopopulationproportions.html">
+   Interval Kepercayaan untuk selisih antara dua Proporsi
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://colab.research.google.com/github/mulaab/saindata/blob/main/book/contents/Webmining/chisquarepenyakit.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/mulaab/saindata"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/mulaab/saindata/issues/new?title=Issue%20on%20page%20%2Fcontents/Webmining/chisquarepenyakit.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/Webmining/chisquarepenyakit.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Chi-Square Feature Selection
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementasi">
+     Implementasi
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kasus-berita">
+   Kasus berita
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Chi-Square Feature Selection</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Chi-Square Feature Selection
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementasi">
+     Implementasi
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kasus-berita">
+   Kasus berita
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># code for loading the format for the notebook</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># path : store the current path to convert back to it later</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="c1">#os.chdir(os.path.join(&#39;..&#39;, &#39;notebook_format&#39;))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># 1. magic to print version</span>
+<span class="c1"># 2. magic so that the notebook will reload external python modules</span>
+<span class="o">%</span><span class="k">load_ext</span> watermark
+<span class="o">%</span><span class="k">load_ext</span> autoreload 
+<span class="o">%</span><span class="k">autoreload</span> 2
+
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelBinarizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">SelectKBest</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="o">%</span><span class="k">watermark</span> -a &#39;Ethen&#39; -d -t -v -p numpy,pandas,sklearn
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="ne">ModuleNotFoundError</span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-2-7a2cd8328b6d&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># 1. magic to print version</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># 2. magic so that the notebook will reload external python modules</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s1">&#39;load_ext watermark&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s1">&#39;load_ext autoreload&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s1">&#39;autoreload 2&#39;</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/IPython/core/interactiveshell.py</span> in <span class="ni">magic</span><span class="nt">(self, arg_s)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2158</span>         <span class="n">magic_name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">magic_arg_s</span> <span class="o">=</span> <span class="n">arg_s</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2159</span>         <span class="n">magic_name</span> <span class="o">=</span> <span class="n">magic_name</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">prefilter</span><span class="o">.</span><span class="n">ESC_MAGIC</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">2160</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="n">magic_name</span><span class="p">,</span> <span class="n">magic_arg_s</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2161</span> 
+<span class="g g-Whitespace">   </span><span class="mi">2162</span>     <span class="c1">#-------------------------------------------------------------------------</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/IPython/core/interactiveshell.py</span> in <span class="ni">run_line_magic</span><span class="nt">(self, magic_name, line)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2079</span>                 <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;local_ns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">(</span><span class="n">stack_depth</span><span class="p">)</span><span class="o">.</span><span class="n">f_locals</span>
+<span class="g g-Whitespace">   </span><span class="mi">2080</span>             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2081</span>                 <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2082</span>             <span class="k">return</span> <span class="n">result</span>
+<span class="g g-Whitespace">   </span><span class="mi">2083</span> 
+
+<span class="nn">&lt;decorator-gen-56&gt;</span> in <span class="ni">load_ext</span><span class="nt">(self, module_str)</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/IPython/core/magic.py</span> in <span class="ni">&lt;lambda&gt;</span><span class="nt">(f, *a, **k)</span>
+<span class="g g-Whitespace">    </span><span class="mi">186</span>     <span class="c1"># but it&#39;s overkill for just that one bit of state.</span>
+<span class="g g-Whitespace">    </span><span class="mi">187</span>     <span class="k">def</span> <span class="nf">magic_deco</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">188</span>         <span class="n">call</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">189</span> 
+<span class="g g-Whitespace">    </span><span class="mi">190</span>         <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/IPython/core/magics/extension.py</span> in <span class="ni">load_ext</span><span class="nt">(self, module_str)</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span>         <span class="k">if</span> <span class="ow">not</span> <span class="n">module_str</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span>             <span class="k">raise</span> <span class="n">UsageError</span><span class="p">(</span><span class="s1">&#39;Missing module name.&#39;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">37</span>         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">extension_manager</span><span class="o">.</span><span class="n">load_extension</span><span class="p">(</span><span class="n">module_str</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span> 
+<span class="g g-Whitespace">     </span><span class="mi">39</span>         <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="s1">&#39;already loaded&#39;</span><span class="p">:</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/IPython/core/extensions.py</span> in <span class="ni">load_extension</span><span class="nt">(self, module_str)</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span>             <span class="k">if</span> <span class="n">module_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span>                 <span class="k">with</span> <span class="n">prepended_to_syspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ipython_extension_dir</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">83</span>                     <span class="nb">__import__</span><span class="p">(</span><span class="n">module_str</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span>             <span class="n">mod</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_str</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_load_ipython_extension</span><span class="p">(</span><span class="n">mod</span><span class="p">):</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;watermark&#39;
+
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NOTE</span>: If your import is failing due to a missing package, you can
+<span class="n">manually</span> <span class="n">install</span> <span class="n">dependencies</span> <span class="n">using</span> <span class="n">either</span> <span class="o">!</span>pip or !apt.
+
+<span class="n">To</span> <span class="n">view</span> <span class="n">examples</span> <span class="n">of</span> <span class="n">installing</span> <span class="n">some</span> <span class="n">common</span> <span class="n">dependencies</span><span class="p">,</span> <span class="n">click</span> <span class="n">the</span>
+<span class="s2">&quot;Open Examples&quot;</span> <span class="n">button</span> <span class="n">below</span><span class="o">.</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="chi-square-feature-selection">
+<h1>Chi-Square Feature Selection<a class="headerlink" href="#chi-square-feature-selection" title="Permalink to this headline">#</a></h1>
+<p>Seleksi fitur adalah proses dimana secara automatis memilih fitur tersebut pada data anda yang berpengaruh terhadap variabel prediksi atau ouput yang diharapakan. Keuntungan melakukan seleksi fitur sebelum melakukan pemodelan data anda adalah:</p>
+<ol class="simple">
+<li><p>Menghindari overfitting: Data yang lebih sedikit memberikan peningkatan kinerja pada model dan sediti menghasilkan  sedikit peluang untuk membuat keputusan salah</p></li>
+<li><p>Mengurangi waktu pelatihan. Data yang lebih sedikit berarti algoritma pelatihan semakin cepat</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># misal kita memiliki data text berikut</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;makan nasi soto&#39;</span><span class="p">,</span> <span class="s1">&#39;nasi soto panas&#39;</span><span class="p">,</span> <span class="s1">&#39;warung nasi soto&#39;</span><span class="p">,</span> <span class="s1">&#39;saya makan nasi pecel&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># kita akan merubah teks tersebut menjadi matrik dokumen-term,</span>
+<span class="c1"># dan kita  mencetak output yang mudah dibaca</span>
+<span class="n">vect</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+<span class="n">X_dtm</span> <span class="o">=</span> <span class="n">vect</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X_dtm</span> <span class="o">=</span> <span class="n">X_dtm</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+<span class="n">X_dtm</span>
+<span class="n">datane</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_dtm</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">vect</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+<span class="n">X_dtm</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4, 7)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Jika kita menambahkan dengan kelas dari masing masing dokumen diperoleh data seperti berikut</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>makan</p></th>
+<th class="head"><p>nasi</p></th>
+<th class="head"><p>panas</p></th>
+<th class="head"><p>pecel</p></th>
+<th class="head"><p>saya</p></th>
+<th class="head"><p>soto</p></th>
+<th class="head"><p>warung</p></th>
+<th class="head"><p>Kelas</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p>Salah satu metode seleksi fitur yang bias digunakan pada data teks adalah seleksi fitur Chi-Square.Uji <span class="math notranslate nohighlight">\(\chi^2\)</span> digunakan pada statistik untuk menguji independensi dari dua kejadian (variabel) Khususnya dalam seleksi fitur, metode tersebut digunakan untuk menguji apakah suatu term tertentu yang ada dan kelas tertentu yang ada adalah saling bebas.Secara umum dari dokumen <span class="math notranslate nohighlight">\(D\)</span> yang tersedia, kita hitung nilai-nilai berikut untuk setiap term dan merangking tersebut sesuai dengan skor masing-masing</p>
+<div class="math notranslate nohighlight">
+\[
+\chi^2(D, t, c) = \sum_{e_t \in \{0, 1\}} \sum_{e_c \in \{0, 1\}} 
+\frac{ ( N_{e_te_c} - E_{e_te_c} )^2 }{ E_{e_te_c} }\]</div>
+<p>dimana</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N\)</span> adalah  frekwensi pengamatan dan <span class="math notranslate nohighlight">\(E\)</span> adalah frekwensi harapan</p></li>
+<li><p><span class="math notranslate nohighlight">\(e_t\)</span> akan bernilai 1 jika dokumen berisi  term <span class="math notranslate nohighlight">\(t\)</span> dan 0 jika sebaliknya</p></li>
+<li><p><span class="math notranslate nohighlight">\(e_c\)</span> akan bernilai 1 jika dokumen dalam kelas <span class="math notranslate nohighlight">\(c\)</span> dan  0 jika sebaliknya</p></li>
+</ul>
+<p>Untuk setiap feature (term), jika memilki score <span class="math notranslate nohighlight">\(\chi^2\)</span> tinggi maka menunjukkan  hipotesa null  <span class="math notranslate nohighlight">\(H_0\)</span> (independence)</p>
+<section id="implementasi">
+<h2>Implementasi<a class="headerlink" href="#implementasi" title="Permalink to this headline">#</a></h2>
+<p>Kita pertama menghitung jumlah pengamatan pada masing-masing kelas. Dalam hal dilakukan dengan membuat tabel contingency dari input <span class="math notranslate nohighlight">\(X\)</span> (nilai nilai feature ) dan <span class="math notranslate nohighlight">\(y\)</span> (label kelas). Setiap masukan <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(j\)</span> menyatakan fitur <span class="math notranslate nohighlight">\(i\)</span> dan kelas  <span class="math notranslate nohighlight">\(j\)</span>, dan menghitung jumlah nilai fitur ke <span class="math notranslate nohighlight">\(i\)</span> dari semua sample yang menjadi anggota kelas <span class="math notranslate nohighlight">\(j\)</span>.</p>
+<p>Perhatikan bahwa walaupun nilai fitur disini dinyatakan sebagai frekwensi, metode ini juga bekerja dengan baik ketika nilainya adalah nilai tf-idf, karena nilai tf-idf juga merupakan bobot/skala dari frekwensi</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># binarisasi kolom output ,</span>
+<span class="c1"># disini menghitung nilai pengamatan dengan perkalian titik</span>
+
+<span class="n">y_binarized</span> <span class="o">=</span> <span class="n">LabelBinarizer</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_binarized</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># baris menunjukkan jumlah pengamatan setiap kelas</span>
+<span class="c1"># dan kolom menunjukkan setiap fitur</span>
+<span class="n">observed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y_binarized</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X_dtm</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">observed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [1 0 0]]
+
+[[1 1 0 1 1 0 0]
+ [1 2 1 0 0 2 0]
+ [0 1 0 0 0 1 1]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>misalkan. beris kedua dari rangkaian pengamatan diatas menujukkan total jumlah dari term-term yang menjadi kelas 1. Kemudian kita menghitung frekwensi harapan dari setiap term pada masing masing kelas</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># menghitung probabilitas setiap kelas dan jumlah fitur; </span>
+<span class="c1"># simpan keduanya sebagai array dua dimensi dengan menggunakan reshape</span>
+<span class="n">class_prob</span> <span class="o">=</span> <span class="n">y_binarized</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">feature_count</span> <span class="o">=</span> <span class="n">X_dtm</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">expected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">class_prob</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">feature_count</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">expected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.5  1.   0.25 0.25 0.25 0.75 0.25]
+ [1.   2.   0.5  0.5  0.5  1.5  0.5 ]
+ [0.5  1.   0.25 0.25 0.25 0.75 0.25]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">class_prob</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.25, 0.5 , 0.25]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_count</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[2, 4, 1, 1, 1, 3, 1]], dtype=int64)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chisq</span> <span class="o">=</span> <span class="p">(</span><span class="n">observed</span> <span class="o">-</span> <span class="n">expected</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">expected</span>
+<span class="n">chisq_score</span> <span class="o">=</span> <span class="n">chisq</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">chisq_score</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1. 0. 1. 3. 3. 1. 3.]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Kita dapat membutktikan hasil kita dengan library scikit-learn menggunakan fungsi  <code class="docutils literal notranslate"><span class="pre">chi2</span></code>. Kode berikut menghitung nilai chi-square value untuk masing masing fitur. Dari sekumpulan nilai yang dihasilkan element pertama adalah skor chi-square , samakin baik sekor jika semakin besar nilainya dan elemen kedua adalah nilai p, nilai ini semakin baki jika semakin kecil.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chi2score</span> <span class="o">=</span> <span class="n">chi2</span><span class="p">(</span><span class="n">X_dtm</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">chi2score</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">chi2score</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">skorchi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span> <span class="n">reshape</span><span class="p">(</span><span class="n">chi2score</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">phisccore</span><span class="o">=</span><span class="n">np</span><span class="o">.</span> <span class="n">reshape</span><span class="p">(</span><span class="n">chi2score</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chi2score</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.60653066, 1.        , 0.60653066, 0.22313016, 0.22313016,
+       0.60653066, 0.22313016])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datascore</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">skorchi</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">vect</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+<span class="n">dataphi</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">phisccore</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">vect</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datascore</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>makan</th>
+      <th>nasi</th>
+      <th>panas</th>
+      <th>pecel</th>
+      <th>saya</th>
+      <th>soto</th>
+      <th>warung</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>3.0</td>
+      <td>1.0</td>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">akhirskore</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">datascore</span><span class="p">,</span> <span class="n">dataphi</span><span class="p">])</span>
+<span class="n">akhirskore</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>makan</th>
+      <th>nasi</th>
+      <th>panas</th>
+      <th>pecel</th>
+      <th>saya</th>
+      <th>soto</th>
+      <th>warung</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.000000</td>
+      <td>0.0</td>
+      <td>1.000000</td>
+      <td>3.00000</td>
+      <td>3.00000</td>
+      <td>1.000000</td>
+      <td>3.00000</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.606531</td>
+      <td>1.0</td>
+      <td>0.606531</td>
+      <td>0.22313</td>
+      <td>0.22313</td>
+      <td>0.606531</td>
+      <td>0.22313</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Scikit-learn menyediakan kelas <code class="docutils literal notranslate"><span class="pre">SelectKBest</span></code> yang dapat digunakan dengan beberapa uji statistik lain. ini akan meranking fitur sesuai dengan uji statistik yang ditentukan dan memilih k teratas( artinya term-term ini dianggap lebih relevan)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kbest</span> <span class="o">=</span> <span class="n">SelectKBest</span><span class="p">(</span><span class="n">score_func</span> <span class="o">=</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">X_dtm_kbest</span> <span class="o">=</span> <span class="n">kbest</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">datane</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">kbest</span><span class="o">.</span><span class="n">get_support</span><span class="p">()</span>
+<span class="n">X_dtm_kbest</span> <span class="o">=</span> <span class="n">datane</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">X_dtm_kbest</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;pecel&#39;, &#39;saya&#39;, &#39;warung&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_dtm_kbest</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;pecel&#39;, &#39;saya&#39;, &#39;soto&#39;, &#39;warung&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="kasus-berita">
+<h1>Kasus berita<a class="headerlink" href="#kasus-berita" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_20newsgroups</span>
+ <span class="c1"># newsgroups categories</span>
+<span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;alt.atheism&#39;</span><span class="p">,</span><span class="s1">&#39;talk.religion.misc&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;comp.graphics&#39;</span><span class="p">,</span><span class="s1">&#39;sci.space&#39;</span><span class="p">]</span>
+
+<span class="n">posts</span> <span class="o">=</span> <span class="n">fetch_20newsgroups</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span>
+                           <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                           <span class="n">remove</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;headers&#39;</span><span class="p">,</span><span class="s1">&#39;footers&#39;</span><span class="p">,</span><span class="s1">&#39;quotes&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">lowercase</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">posts</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">chi2</span>
+<span class="c1"># menghitung chi2 untuk setiap fitur</span>
+<span class="n">chi2score</span> <span class="o">=</span> <span class="n">chi2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">posts</span><span class="o">.</span><span class="n">target</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="n">barh</span><span class="p">,</span><span class="n">plot</span><span class="p">,</span><span class="n">yticks</span><span class="p">,</span><span class="n">show</span><span class="p">,</span><span class="n">grid</span><span class="p">,</span><span class="n">xlabel</span><span class="p">,</span><span class="n">figure</span>
+<span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">wscores</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(),</span><span class="n">chi2score</span><span class="p">))</span>
+<span class="n">wchi2</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">wscores</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> 
+<span class="n">topchi2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">wchi2</span><span class="p">[</span><span class="o">-</span><span class="mi">25</span><span class="p">:]))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">topchi2</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">topchi2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">barh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">topchi2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">align</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=.</span><span class="mi">2</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">topchi2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">,</span><span class="s1">&#39;-o&#39;</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">alpha</span><span class="o">=.</span><span class="mi">8</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">yticks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$\chi^2$&#39;</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/chisquarepenyakit_30_0.png" src="../../_images/chisquarepenyakit_30_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SelectFpr</span><span class="p">,</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">SelectKBest</span><span class="p">,</span> <span class="n">SelectFwe</span><span class="p">,</span> <span class="n">f_classif</span><span class="p">,</span> <span class="n">SelectFdr</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline  
+<span class="c1"># https://www.kaggle.com/uciml/breast-cancer-wisconsin-data?select=data.csv</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">)</span>
+<span class="c1"># replace M with 1 and B with 0</span>
+<span class="n">my_map</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+          <span class="s1">&#39;B&#39;</span> <span class="p">:</span><span class="mi">0</span>
+         <span class="p">}</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;diagnosis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;diagnosis&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">my_map</span><span class="p">)</span>
+<span class="c1"># remove the id column</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>diagnosis</th>
+      <th>radius_mean</th>
+      <th>texture_mean</th>
+      <th>perimeter_mean</th>
+      <th>area_mean</th>
+      <th>smoothness_mean</th>
+      <th>compactness_mean</th>
+      <th>concavity_mean</th>
+      <th>concave points_mean</th>
+      <th>symmetry_mean</th>
+      <th>...</th>
+      <th>radius_worst</th>
+      <th>texture_worst</th>
+      <th>perimeter_worst</th>
+      <th>area_worst</th>
+      <th>smoothness_worst</th>
+      <th>compactness_worst</th>
+      <th>concavity_worst</th>
+      <th>concave points_worst</th>
+      <th>symmetry_worst</th>
+      <th>fractal_dimension_worst</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>17.99</td>
+      <td>10.38</td>
+      <td>122.80</td>
+      <td>1001.0</td>
+      <td>0.11840</td>
+      <td>0.27760</td>
+      <td>0.30010</td>
+      <td>0.14710</td>
+      <td>0.2419</td>
+      <td>...</td>
+      <td>25.380</td>
+      <td>17.33</td>
+      <td>184.60</td>
+      <td>2019.0</td>
+      <td>0.16220</td>
+      <td>0.66560</td>
+      <td>0.7119</td>
+      <td>0.2654</td>
+      <td>0.4601</td>
+      <td>0.11890</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>20.57</td>
+      <td>17.77</td>
+      <td>132.90</td>
+      <td>1326.0</td>
+      <td>0.08474</td>
+      <td>0.07864</td>
+      <td>0.08690</td>
+      <td>0.07017</td>
+      <td>0.1812</td>
+      <td>...</td>
+      <td>24.990</td>
+      <td>23.41</td>
+      <td>158.80</td>
+      <td>1956.0</td>
+      <td>0.12380</td>
+      <td>0.18660</td>
+      <td>0.2416</td>
+      <td>0.1860</td>
+      <td>0.2750</td>
+      <td>0.08902</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>19.69</td>
+      <td>21.25</td>
+      <td>130.00</td>
+      <td>1203.0</td>
+      <td>0.10960</td>
+      <td>0.15990</td>
+      <td>0.19740</td>
+      <td>0.12790</td>
+      <td>0.2069</td>
+      <td>...</td>
+      <td>23.570</td>
+      <td>25.53</td>
+      <td>152.50</td>
+      <td>1709.0</td>
+      <td>0.14440</td>
+      <td>0.42450</td>
+      <td>0.4504</td>
+      <td>0.2430</td>
+      <td>0.3613</td>
+      <td>0.08758</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>11.42</td>
+      <td>20.38</td>
+      <td>77.58</td>
+      <td>386.1</td>
+      <td>0.14250</td>
+      <td>0.28390</td>
+      <td>0.24140</td>
+      <td>0.10520</td>
+      <td>0.2597</td>
+      <td>...</td>
+      <td>14.910</td>
+      <td>26.50</td>
+      <td>98.87</td>
+      <td>567.7</td>
+      <td>0.20980</td>
+      <td>0.86630</td>
+      <td>0.6869</td>
+      <td>0.2575</td>
+      <td>0.6638</td>
+      <td>0.17300</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>20.29</td>
+      <td>14.34</td>
+      <td>135.10</td>
+      <td>1297.0</td>
+      <td>0.10030</td>
+      <td>0.13280</td>
+      <td>0.19800</td>
+      <td>0.10430</td>
+      <td>0.1809</td>
+      <td>...</td>
+      <td>22.540</td>
+      <td>16.67</td>
+      <td>152.20</td>
+      <td>1575.0</td>
+      <td>0.13740</td>
+      <td>0.20500</td>
+      <td>0.4000</td>
+      <td>0.1625</td>
+      <td>0.2364</td>
+      <td>0.07678</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>564</th>
+      <td>1</td>
+      <td>21.56</td>
+      <td>22.39</td>
+      <td>142.00</td>
+      <td>1479.0</td>
+      <td>0.11100</td>
+      <td>0.11590</td>
+      <td>0.24390</td>
+      <td>0.13890</td>
+      <td>0.1726</td>
+      <td>...</td>
+      <td>25.450</td>
+      <td>26.40</td>
+      <td>166.10</td>
+      <td>2027.0</td>
+      <td>0.14100</td>
+      <td>0.21130</td>
+      <td>0.4107</td>
+      <td>0.2216</td>
+      <td>0.2060</td>
+      <td>0.07115</td>
+    </tr>
+    <tr>
+      <th>565</th>
+      <td>1</td>
+      <td>20.13</td>
+      <td>28.25</td>
+      <td>131.20</td>
+      <td>1261.0</td>
+      <td>0.09780</td>
+      <td>0.10340</td>
+      <td>0.14400</td>
+      <td>0.09791</td>
+      <td>0.1752</td>
+      <td>...</td>
+      <td>23.690</td>
+      <td>38.25</td>
+      <td>155.00</td>
+      <td>1731.0</td>
+      <td>0.11660</td>
+      <td>0.19220</td>
+      <td>0.3215</td>
+      <td>0.1628</td>
+      <td>0.2572</td>
+      <td>0.06637</td>
+    </tr>
+    <tr>
+      <th>566</th>
+      <td>1</td>
+      <td>16.60</td>
+      <td>28.08</td>
+      <td>108.30</td>
+      <td>858.1</td>
+      <td>0.08455</td>
+      <td>0.10230</td>
+      <td>0.09251</td>
+      <td>0.05302</td>
+      <td>0.1590</td>
+      <td>...</td>
+      <td>18.980</td>
+      <td>34.12</td>
+      <td>126.70</td>
+      <td>1124.0</td>
+      <td>0.11390</td>
+      <td>0.30940</td>
+      <td>0.3403</td>
+      <td>0.1418</td>
+      <td>0.2218</td>
+      <td>0.07820</td>
+    </tr>
+    <tr>
+      <th>567</th>
+      <td>1</td>
+      <td>20.60</td>
+      <td>29.33</td>
+      <td>140.10</td>
+      <td>1265.0</td>
+      <td>0.11780</td>
+      <td>0.27700</td>
+      <td>0.35140</td>
+      <td>0.15200</td>
+      <td>0.2397</td>
+      <td>...</td>
+      <td>25.740</td>
+      <td>39.42</td>
+      <td>184.60</td>
+      <td>1821.0</td>
+      <td>0.16500</td>
+      <td>0.86810</td>
+      <td>0.9387</td>
+      <td>0.2650</td>
+      <td>0.4087</td>
+      <td>0.12400</td>
+    </tr>
+    <tr>
+      <th>568</th>
+      <td>0</td>
+      <td>7.76</td>
+      <td>24.54</td>
+      <td>47.92</td>
+      <td>181.0</td>
+      <td>0.05263</td>
+      <td>0.04362</td>
+      <td>0.00000</td>
+      <td>0.00000</td>
+      <td>0.1587</td>
+      <td>...</td>
+      <td>9.456</td>
+      <td>30.37</td>
+      <td>59.16</td>
+      <td>268.6</td>
+      <td>0.08996</td>
+      <td>0.06444</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.2871</td>
+      <td>0.07039</td>
+    </tr>
+  </tbody>
+</table>
+<p>569 rows × 31 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;diagnosis&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">diagnosis</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>radius_mean</th>
+      <th>texture_mean</th>
+      <th>perimeter_mean</th>
+      <th>area_mean</th>
+      <th>smoothness_mean</th>
+      <th>compactness_mean</th>
+      <th>concavity_mean</th>
+      <th>concave points_mean</th>
+      <th>symmetry_mean</th>
+      <th>fractal_dimension_mean</th>
+      <th>...</th>
+      <th>radius_worst</th>
+      <th>texture_worst</th>
+      <th>perimeter_worst</th>
+      <th>area_worst</th>
+      <th>smoothness_worst</th>
+      <th>compactness_worst</th>
+      <th>concavity_worst</th>
+      <th>concave points_worst</th>
+      <th>symmetry_worst</th>
+      <th>fractal_dimension_worst</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>17.99</td>
+      <td>10.38</td>
+      <td>122.80</td>
+      <td>1001.0</td>
+      <td>0.11840</td>
+      <td>0.27760</td>
+      <td>0.30010</td>
+      <td>0.14710</td>
+      <td>0.2419</td>
+      <td>0.07871</td>
+      <td>...</td>
+      <td>25.380</td>
+      <td>17.33</td>
+      <td>184.60</td>
+      <td>2019.0</td>
+      <td>0.16220</td>
+      <td>0.66560</td>
+      <td>0.7119</td>
+      <td>0.2654</td>
+      <td>0.4601</td>
+      <td>0.11890</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20.57</td>
+      <td>17.77</td>
+      <td>132.90</td>
+      <td>1326.0</td>
+      <td>0.08474</td>
+      <td>0.07864</td>
+      <td>0.08690</td>
+      <td>0.07017</td>
+      <td>0.1812</td>
+      <td>0.05667</td>
+      <td>...</td>
+      <td>24.990</td>
+      <td>23.41</td>
+      <td>158.80</td>
+      <td>1956.0</td>
+      <td>0.12380</td>
+      <td>0.18660</td>
+      <td>0.2416</td>
+      <td>0.1860</td>
+      <td>0.2750</td>
+      <td>0.08902</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>19.69</td>
+      <td>21.25</td>
+      <td>130.00</td>
+      <td>1203.0</td>
+      <td>0.10960</td>
+      <td>0.15990</td>
+      <td>0.19740</td>
+      <td>0.12790</td>
+      <td>0.2069</td>
+      <td>0.05999</td>
+      <td>...</td>
+      <td>23.570</td>
+      <td>25.53</td>
+      <td>152.50</td>
+      <td>1709.0</td>
+      <td>0.14440</td>
+      <td>0.42450</td>
+      <td>0.4504</td>
+      <td>0.2430</td>
+      <td>0.3613</td>
+      <td>0.08758</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.42</td>
+      <td>20.38</td>
+      <td>77.58</td>
+      <td>386.1</td>
+      <td>0.14250</td>
+      <td>0.28390</td>
+      <td>0.24140</td>
+      <td>0.10520</td>
+      <td>0.2597</td>
+      <td>0.09744</td>
+      <td>...</td>
+      <td>14.910</td>
+      <td>26.50</td>
+      <td>98.87</td>
+      <td>567.7</td>
+      <td>0.20980</td>
+      <td>0.86630</td>
+      <td>0.6869</td>
+      <td>0.2575</td>
+      <td>0.6638</td>
+      <td>0.17300</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>20.29</td>
+      <td>14.34</td>
+      <td>135.10</td>
+      <td>1297.0</td>
+      <td>0.10030</td>
+      <td>0.13280</td>
+      <td>0.19800</td>
+      <td>0.10430</td>
+      <td>0.1809</td>
+      <td>0.05883</td>
+      <td>...</td>
+      <td>22.540</td>
+      <td>16.67</td>
+      <td>152.20</td>
+      <td>1575.0</td>
+      <td>0.13740</td>
+      <td>0.20500</td>
+      <td>0.4000</td>
+      <td>0.1625</td>
+      <td>0.2364</td>
+      <td>0.07678</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>564</th>
+      <td>21.56</td>
+      <td>22.39</td>
+      <td>142.00</td>
+      <td>1479.0</td>
+      <td>0.11100</td>
+      <td>0.11590</td>
+      <td>0.24390</td>
+      <td>0.13890</td>
+      <td>0.1726</td>
+      <td>0.05623</td>
+      <td>...</td>
+      <td>25.450</td>
+      <td>26.40</td>
+      <td>166.10</td>
+      <td>2027.0</td>
+      <td>0.14100</td>
+      <td>0.21130</td>
+      <td>0.4107</td>
+      <td>0.2216</td>
+      <td>0.2060</td>
+      <td>0.07115</td>
+    </tr>
+    <tr>
+      <th>565</th>
+      <td>20.13</td>
+      <td>28.25</td>
+      <td>131.20</td>
+      <td>1261.0</td>
+      <td>0.09780</td>
+      <td>0.10340</td>
+      <td>0.14400</td>
+      <td>0.09791</td>
+      <td>0.1752</td>
+      <td>0.05533</td>
+      <td>...</td>
+      <td>23.690</td>
+      <td>38.25</td>
+      <td>155.00</td>
+      <td>1731.0</td>
+      <td>0.11660</td>
+      <td>0.19220</td>
+      <td>0.3215</td>
+      <td>0.1628</td>
+      <td>0.2572</td>
+      <td>0.06637</td>
+    </tr>
+    <tr>
+      <th>566</th>
+      <td>16.60</td>
+      <td>28.08</td>
+      <td>108.30</td>
+      <td>858.1</td>
+      <td>0.08455</td>
+      <td>0.10230</td>
+      <td>0.09251</td>
+      <td>0.05302</td>
+      <td>0.1590</td>
+      <td>0.05648</td>
+      <td>...</td>
+      <td>18.980</td>
+      <td>34.12</td>
+      <td>126.70</td>
+      <td>1124.0</td>
+      <td>0.11390</td>
+      <td>0.30940</td>
+      <td>0.3403</td>
+      <td>0.1418</td>
+      <td>0.2218</td>
+      <td>0.07820</td>
+    </tr>
+    <tr>
+      <th>567</th>
+      <td>20.60</td>
+      <td>29.33</td>
+      <td>140.10</td>
+      <td>1265.0</td>
+      <td>0.11780</td>
+      <td>0.27700</td>
+      <td>0.35140</td>
+      <td>0.15200</td>
+      <td>0.2397</td>
+      <td>0.07016</td>
+      <td>...</td>
+      <td>25.740</td>
+      <td>39.42</td>
+      <td>184.60</td>
+      <td>1821.0</td>
+      <td>0.16500</td>
+      <td>0.86810</td>
+      <td>0.9387</td>
+      <td>0.2650</td>
+      <td>0.4087</td>
+      <td>0.12400</td>
+    </tr>
+    <tr>
+      <th>568</th>
+      <td>7.76</td>
+      <td>24.54</td>
+      <td>47.92</td>
+      <td>181.0</td>
+      <td>0.05263</td>
+      <td>0.04362</td>
+      <td>0.00000</td>
+      <td>0.00000</td>
+      <td>0.1587</td>
+      <td>0.05884</td>
+      <td>...</td>
+      <td>9.456</td>
+      <td>30.37</td>
+      <td>59.16</td>
+      <td>268.6</td>
+      <td>0.08996</td>
+      <td>0.06444</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.2871</td>
+      <td>0.07039</td>
+    </tr>
+  </tbody>
+</table>
+<p>569 rows × 30 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">SelectKBest</span><span class="p">(</span><span class="n">score_func</span><span class="o">=</span><span class="n">chi2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">new_data</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">get_support</span><span class="p">()</span>
+<span class="n">new_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">new_features</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;radius_mean&#39;, &#39;perimeter_mean&#39;, &#39;area_mean&#39;, &#39;area_se&#39;, &#39;radius_worst&#39;,
+       &#39;perimeter_worst&#39;, &#39;area_worst&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/Webmining"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Mulaab-UTM<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
